@@ -1,7 +1,5 @@
 package edelta.resource.derivedstate;
 
-import static org.eclipse.xtext.EcoreUtil2.getContainerOfType;
-
 import java.util.Objects;
 
 import org.eclipse.emf.ecore.ENamedElement;
@@ -12,11 +10,11 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.xbase.XExpression;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
 import edelta.edelta.EdeltaEcoreReference;
-import edelta.edelta.EdeltaEcoreReferenceExpression;
 
 /**
  * Provides access (and possibly install) to the {@link EdeltaDerivedState}.
@@ -31,6 +29,9 @@ public class EdeltaDerivedStateHelper {
 	@Named(Constants.LANGUAGE_NAME)
 	private String languageName;
 
+	@Inject
+	private Provider<EdeltaDerivedState> derivedStateProvider;
+
 	public EdeltaDerivedState getOrInstallAdapter(final Resource resource) {
 		if (resource instanceof XtextResource) {
 			final String resourceLanguageName = ((XtextResource) resource).getLanguageName();
@@ -39,7 +40,7 @@ public class EdeltaDerivedStateHelper {
 					(EdeltaDerivedState) EcoreUtil.getAdapter
 						(resource.eAdapters(), EdeltaDerivedState.class);
 				if (adapter == null) {
-					adapter = new EdeltaDerivedState();
+					adapter = derivedStateProvider.get();
 					resource.eAdapters().add(adapter);
 				}
 				return adapter;
@@ -59,14 +60,6 @@ public class EdeltaDerivedStateHelper {
 						e -> new EdeltaEcoreReferenceState());
 	}
 
-	public EdeltaEcoreReferenceExpressionState getEcoreReferenceExpressionState(
-			EdeltaEcoreReferenceExpression edeltaEcoreReferenceExpression) {
-		return getOrInstallAdapter(edeltaEcoreReferenceExpression.eResource())
-				.getEcoreReferenceExpressionStateMap()
-				.computeIfAbsent(edeltaEcoreReferenceExpression,
-						e -> new EdeltaEcoreReferenceExpressionState());
-	}
-
 	public EdeltaENamedElementXExpressionMap getEnamedElementXExpressionMap(Resource resource) {
 		return getOrInstallAdapter(resource).getEnamedElementXExpressionMap();
 	}
@@ -77,10 +70,7 @@ public class EdeltaDerivedStateHelper {
 	}
 
 	public XExpression getResponsibleExpression(EdeltaEcoreReference ecoreReference) {
-		return getEcoreReferenceExpressionState(
-					getContainerOfType(ecoreReference,
-						EdeltaEcoreReferenceExpression.class))
-				.getEnamedElementXExpressionMap()
+		return getEnamedElementXExpressionMap(ecoreReference.eResource())
 				.get(ecoreReference.getEnamedelement());
 	}
 }

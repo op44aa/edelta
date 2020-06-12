@@ -2,8 +2,6 @@ package edelta.interpreter;
 
 import static edelta.edelta.EdeltaPackage.Literals.EDELTA_ECORE_REFERENCE_EXPRESSION__REFERENCE;
 import static edelta.util.EdeltaModelUtil.getProgram;
-import static java.util.stream.Collectors.toList;
-import static org.eclipse.xtext.EcoreUtil2.getAllContentsOfType;
 import static org.eclipse.xtext.xbase.lib.CollectionLiterals.newHashMap;
 import static org.eclipse.xtext.xbase.lib.IterableExtensions.exists;
 import static org.eclipse.xtext.xbase.lib.IterableExtensions.filter;
@@ -35,7 +33,6 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 import edelta.compiler.EdeltaCompilerUtil;
-import edelta.edelta.EdeltaEcoreReference;
 import edelta.edelta.EdeltaEcoreReferenceExpression;
 import edelta.edelta.EdeltaModifyEcoreOperation;
 import edelta.edelta.EdeltaOperation;
@@ -262,30 +259,10 @@ public class EdeltaInterpreter extends XbaseInterpreter {
 				if (op != null) {
 					result = super.invokeOperation
 						(op, thisObject, args, context, indicator);
-					postProcess(result, ecoreReferenceExpression);
 					checkStaleAccess(result, ecoreReferenceExpression);
 				}
 				return result;
 			});
-	}
-
-	private void postProcess(Object result, EdeltaEcoreReferenceExpression exp) {
-		if (result != null) {
-			// takes a snapshot of the mapping EEnamedElement -> XExpression
-			// and associates it to this EdeltaEcoreReferenceExpression
-			var enamedElements =
-				getAllContentsOfType(exp, EdeltaEcoreReference.class)
-					.stream().map(EdeltaEcoreReference::getEnamedelement)
-					.collect(toList());
-			var expMap = derivedStateHelper
-				.getEcoreReferenceExpressionState(exp)
-				.getEnamedElementXExpressionMap();
-			var elMap = derivedStateHelper
-				.getEnamedElementXExpressionMap(exp.eResource());
-			elMap.entrySet().stream()
-				.filter(entry -> enamedElements.contains(entry.getKey()))
-				.forEach(entry -> expMap.put(entry.getKey(), entry.getValue()));
-		}
 	}
 
 	private void checkStaleAccess(Object result, EdeltaEcoreReferenceExpression ecoreReferenceExpression) {

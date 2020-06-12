@@ -17,12 +17,13 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.linking.impl.XtextLinkingDiagnostic;
+import org.eclipse.xtext.naming.IQualifiedNameProvider;
+import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.testing.InjectWith;
 import org.eclipse.xtext.testing.XtextRunner;
 import org.eclipse.xtext.util.IResourceScopeCache;
@@ -33,6 +34,7 @@ import org.eclipse.xtext.xbase.XExpression;
 import org.eclipse.xtext.xbase.XbaseFactory;
 import org.eclipse.xtext.xbase.XbasePackage;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.junit.Before;
@@ -61,6 +63,10 @@ public class EdeltaInterpreterResourceListenerTest extends EdeltaAbstractTest {
   @Inject
   private EdeltaInterpreterDiagnosticHelper diagnosticHelper;
   
+  @Inject
+  @Extension
+  private IQualifiedNameProvider qualifiedNameProvider;
+  
   private EdeltaInterpreterResourceListener listener;
   
   private EPackage ePackage;
@@ -88,7 +94,7 @@ public class EdeltaInterpreterResourceListenerTest extends EdeltaAbstractTest {
       EPackage _doubleArrow = ObjectExtensions.<EPackage>operator_doubleArrow(_createEPackage, _function);
       this.ePackage = _doubleArrow;
       this.resource = this._parseHelper.parse("").eResource();
-      EdeltaENamedElementXExpressionMap _edeltaENamedElementXExpressionMap = new EdeltaENamedElementXExpressionMap();
+      EdeltaENamedElementXExpressionMap _edeltaENamedElementXExpressionMap = new EdeltaENamedElementXExpressionMap(this.qualifiedNameProvider);
       this.enamedElementXExpressionMap = _edeltaENamedElementXExpressionMap;
       EdeltaInterpreterResourceListener _edeltaInterpreterResourceListener = new EdeltaInterpreterResourceListener(
         this.cache, this.resource, this.enamedElementXExpressionMap, this.diagnosticHelper);
@@ -165,26 +171,12 @@ public class EdeltaInterpreterResourceListenerTest extends EdeltaAbstractTest {
     final XExpression currentExpression = Mockito.<XExpression>mock(XExpression.class);
     this.listener.setCurrentExpression(currentExpression);
     final EClassifier element = this.ePackage.getEClassifiers().get(0);
-    Assertions.<ENamedElement, XExpression>assertThat(this.enamedElementXExpressionMap).isEmpty();
+    Assertions.<QualifiedName, XExpression>assertThat(this.enamedElementXExpressionMap).isEmpty();
     element.setName("Modified");
     final Consumer<XExpression> _function = (XExpression it) -> {
       Assertions.<XExpression>assertThat(it).isSameAs(currentExpression);
     };
-    Assertions.<ENamedElement, XExpression>assertThat(this.enamedElementXExpressionMap).hasEntrySatisfying(element, _function);
-  }
-  
-  @Test
-  public void testENamedElementXExpressionMapUpdatedIfEntryAlreadyPresent() {
-    final XExpression alreadyMappedExpression = Mockito.<XExpression>mock(XExpression.class);
-    final XExpression currentExpression = Mockito.<XExpression>mock(XExpression.class);
-    final EClassifier element = this.ePackage.getEClassifiers().get(0);
-    this.enamedElementXExpressionMap.put(element, alreadyMappedExpression);
-    this.listener.setCurrentExpression(currentExpression);
-    element.setName("Modified");
-    final Consumer<XExpression> _function = (XExpression it) -> {
-      Assertions.<XExpression>assertThat(it).isSameAs(currentExpression);
-    };
-    Assertions.<ENamedElement, XExpression>assertThat(this.enamedElementXExpressionMap).hasEntrySatisfying(element, _function);
+    Assertions.<QualifiedName, XExpression>assertThat(this.enamedElementXExpressionMap).hasEntrySatisfying(this.qualifiedNameProvider.getFullyQualifiedName(element), _function);
   }
   
   @Test
@@ -192,36 +184,36 @@ public class EdeltaInterpreterResourceListenerTest extends EdeltaAbstractTest {
     final XExpression currentExpression = Mockito.<XExpression>mock(XExpression.class);
     this.listener.setCurrentExpression(currentExpression);
     final EClass element = EdeltaInterpreterResourceListenerTest.ecoreFactory.createEClass();
-    Assertions.<ENamedElement, XExpression>assertThat(this.enamedElementXExpressionMap).isEmpty();
+    Assertions.<QualifiedName, XExpression>assertThat(this.enamedElementXExpressionMap).isEmpty();
     EList<EClassifier> _eClassifiers = this.ePackage.getEClassifiers();
     _eClassifiers.add(element);
     final Consumer<XExpression> _function = (XExpression it) -> {
       Assertions.<XExpression>assertThat(it).isSameAs(currentExpression);
     };
-    Assertions.<ENamedElement, XExpression>assertThat(this.enamedElementXExpressionMap).hasEntrySatisfying(element, _function);
+    Assertions.<QualifiedName, XExpression>assertThat(this.enamedElementXExpressionMap).hasEntrySatisfying(this.qualifiedNameProvider.getFullyQualifiedName(element), _function);
   }
   
   @Test
   public void testENamedElementXExpressionMapIsNotUpdatedWhenNotENamedElementIsAdded() {
     final XExpression currentExpression = Mockito.<XExpression>mock(XExpression.class);
     this.listener.setCurrentExpression(currentExpression);
-    Assertions.<ENamedElement, XExpression>assertThat(this.enamedElementXExpressionMap).isEmpty();
+    Assertions.<QualifiedName, XExpression>assertThat(this.enamedElementXExpressionMap).isEmpty();
     EClassifier _get = this.ePackage.getEClassifiers().get(0);
     final EClass element = ((EClass) _get);
     EList<EClass> _eSuperTypes = element.getESuperTypes();
     EClass _createEClass = EdeltaInterpreterResourceListenerTest.ecoreFactory.createEClass();
     _eSuperTypes.add(_createEClass);
-    Assertions.<ENamedElement, XExpression>assertThat(this.enamedElementXExpressionMap).doesNotContainKey(element);
+    Assertions.<QualifiedName, XExpression>assertThat(this.enamedElementXExpressionMap).doesNotContainKey(this.qualifiedNameProvider.getFullyQualifiedName(element));
   }
   
   @Test
   public void testENamedElementXExpressionMapIsNotUpdatedWithCurrentExpressionWhenAnotherFeatureIsChanged() {
     final XExpression currentExpression = Mockito.<XExpression>mock(XExpression.class);
     this.listener.setCurrentExpression(currentExpression);
-    Assertions.<ENamedElement, XExpression>assertThat(this.enamedElementXExpressionMap).isEmpty();
+    Assertions.<QualifiedName, XExpression>assertThat(this.enamedElementXExpressionMap).isEmpty();
     EClassifier _get = this.ePackage.getEClassifiers().get(0);
     _get.setInstanceClassName("foo");
-    Assertions.<ENamedElement, XExpression>assertThat(this.enamedElementXExpressionMap).isEmpty();
+    Assertions.<QualifiedName, XExpression>assertThat(this.enamedElementXExpressionMap).isEmpty();
   }
   
   @Test

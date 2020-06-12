@@ -28,6 +28,7 @@ import org.junit.runner.RunWith
 
 import static org.assertj.core.api.Assertions.assertThat
 import static org.mockito.Mockito.*
+import org.eclipse.xtext.naming.IQualifiedNameProvider
 
 @RunWith(XtextRunner)
 @InjectWith(EdeltaInjectorProvider)
@@ -44,6 +45,7 @@ class EdeltaInterpreterResourceListenerTest extends EdeltaAbstractTest {
 
 	@Inject IResourceScopeCache cache
 	@Inject EdeltaInterpreterDiagnosticHelper diagnosticHelper
+	@Inject extension IQualifiedNameProvider qualifiedNameProvider
 	var EdeltaInterpreterResourceListener listener
 	var EPackage ePackage
 	var Resource resource
@@ -59,7 +61,7 @@ class EdeltaInterpreterResourceListenerTest extends EdeltaAbstractTest {
 			]
 		]
 		resource = "".parse.eResource
-		enamedElementXExpressionMap = new EdeltaENamedElementXExpressionMap
+		enamedElementXExpressionMap = new EdeltaENamedElementXExpressionMap(qualifiedNameProvider)
 		listener = new EdeltaInterpreterResourceListener(
 			cache, resource, enamedElementXExpressionMap, diagnosticHelper
 		)
@@ -150,22 +152,7 @@ class EdeltaInterpreterResourceListenerTest extends EdeltaAbstractTest {
 		// change the name
 		element.name = "Modified"
 		assertThat(enamedElementXExpressionMap)
-			.hasEntrySatisfying(element) [
-				assertThat(it).isSameAs(currentExpression)
-			]
-	}
-
-	@Test
-	def void testENamedElementXExpressionMapUpdatedIfEntryAlreadyPresent() {
-		val alreadyMappedExpression = mock(XExpression)
-		val currentExpression = mock(XExpression)
-		val element = ePackage.EClassifiers.get(0)
-		enamedElementXExpressionMap.put(element, alreadyMappedExpression)
-		listener.setCurrentExpression(currentExpression)
-		// change the name
-		element.name = "Modified"
-		assertThat(enamedElementXExpressionMap)
-			.hasEntrySatisfying(element) [
+			.hasEntrySatisfying(element.fullyQualifiedName) [
 				assertThat(it).isSameAs(currentExpression)
 			]
 	}
@@ -179,7 +166,7 @@ class EdeltaInterpreterResourceListenerTest extends EdeltaAbstractTest {
 		// element is added to an existing collection
 		ePackage.EClassifiers += element
 		assertThat(enamedElementXExpressionMap)
-			.hasEntrySatisfying(element) [
+			.hasEntrySatisfying(element.fullyQualifiedName) [
 				assertThat(it).isSameAs(currentExpression)
 			]
 	}
@@ -195,7 +182,7 @@ class EdeltaInterpreterResourceListenerTest extends EdeltaAbstractTest {
 		// this will trigger an ADD event with a EGenericType,
 		// which is not an ENamedElement
 		assertThat(enamedElementXExpressionMap)
-			.doesNotContainKey(element)
+			.doesNotContainKey(element.fullyQualifiedName)
 	}
 
 	@Test

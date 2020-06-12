@@ -44,7 +44,7 @@ public class EdeltaInterpreterDiagnosticHelper {
 		if (problematicObject instanceof ENamedElement) {
 			correspondingExpression = derivedStateHelper
 				.getEnamedElementXExpressionMap(eResource)
-				.get(problematicObject);
+				.get((ENamedElement) problematicObject);
 		}
 		final List<Diagnostic> issues = 
 			severity == Severity.WARNING ? eResource.getWarnings() : eResource.getErrors();
