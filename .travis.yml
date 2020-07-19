@@ -10,14 +10,14 @@ matrix:
     # always build this environment
     - os: linux
       dist: xenial
-      jdk: openjdk11
+      jdk: openjdk14
       services:
       - xvfb
       env: ADDITIONAL="-Pjacoco,build-ide,test-ide,run-its coveralls:report sonar:sonar"
     # only on PR, or after merging a PR
     - os: osx
       osx_image: xcode10.1
-      jdk: openjdk11
+      jdk: openjdk14
       env: ADDITIONAL="-Pbuild-ide,test-ide,run-its"
       if: type IN (pull_request) OR commit_message =~ /^Merge pull request/
 
