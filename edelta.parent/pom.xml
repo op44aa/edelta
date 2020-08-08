@@ -303,6 +303,7 @@
               <version>${project.version}</version>
             </artifact>
           </target>
+          <executionEnvironment>JavaSE-14</executionEnvironment>
         </configuration>
       </plugin>
     </plugins>
