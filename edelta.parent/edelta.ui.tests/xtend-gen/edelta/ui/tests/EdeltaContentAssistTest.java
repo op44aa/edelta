@@ -151,6 +151,32 @@ public class EdeltaContentAssistTest extends AbstractContentAssistTest {
   @Test
   public void testMetamodelsInThePresenceOfSubpackages() {
     try {
+      this.createMySubPackagesEcore();
+      IResourcesSetupUtil.waitForBuild();
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("\"annotation\"");
+      _builder.newLine();
+      _builder.append("\"data\"");
+      _builder.newLine();
+      _builder.append("\"ecore\"");
+      _builder.newLine();
+      _builder.append("\"mainpackage\"");
+      _builder.newLine();
+      _builder.append("\"mypackage\"");
+      _builder.newLine();
+      _builder.append("\"namespace\"");
+      _builder.newLine();
+      _builder.append("\"type\"");
+      _builder.newLine();
+      this.newBuilder().append("metamodel ").assertText(
+        this.fromLinesOfStringsToStringArray(_builder));
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  private IFile createMySubPackagesEcore() {
+    try {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
       _builder.newLine();
@@ -212,25 +238,7 @@ public class EdeltaContentAssistTest extends AbstractContentAssistTest {
       _builder.newLine();
       _builder.append("</ecore:EPackage>");
       _builder.newLine();
-      IResourcesSetupUtil.createFile((EdeltaPluginProjectHelper.PROJECT_NAME + "/model/MySubPackages.ecore"), _builder.toString());
-      IResourcesSetupUtil.waitForBuild();
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("\"annotation\"");
-      _builder_1.newLine();
-      _builder_1.append("\"data\"");
-      _builder_1.newLine();
-      _builder_1.append("\"ecore\"");
-      _builder_1.newLine();
-      _builder_1.append("\"mainpackage\"");
-      _builder_1.newLine();
-      _builder_1.append("\"mypackage\"");
-      _builder_1.newLine();
-      _builder_1.append("\"namespace\"");
-      _builder_1.newLine();
-      _builder_1.append("\"type\"");
-      _builder_1.newLine();
-      this.newBuilder().append("metamodel ").assertText(
-        this.fromLinesOfStringsToStringArray(_builder_1));
+      return IResourcesSetupUtil.createFile((EdeltaPluginProjectHelper.PROJECT_NAME + "/model/MySubPackages.ecore"), _builder.toString());
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -278,6 +286,32 @@ public class EdeltaContentAssistTest extends AbstractContentAssistTest {
       _builder_1.append("myReference");
       _builder_1.newLine();
       _builder_1.append("mypackage");
+      _builder_1.newLine();
+      _newBuilder.append(_builder.toString()).assertText(this.fromLinesOfStringsToStringArray(_builder_1));
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testUnqualifiedEcoreReferenceWithPrefix() {
+    try {
+      ContentAssistProcessorTestBuilder _newBuilder = this.newBuilder();
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("metamodel \"mypackage\"");
+      _builder.newLine();
+      _builder.append("modifyEcore aTest epackage mypackage { ");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("ecoreref(myd");
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("MyDataType");
+      _builder_1.newLine();
+      _builder_1.append("MyDerivedClass");
+      _builder_1.newLine();
+      _builder_1.append("myDerivedAttribute");
+      _builder_1.newLine();
+      _builder_1.append("myDerivedReference");
       _builder_1.newLine();
       _newBuilder.append(_builder.toString()).assertText(this.fromLinesOfStringsToStringArray(_builder_1));
     } catch (Throwable _e) {
@@ -377,6 +411,49 @@ public class EdeltaContentAssistTest extends AbstractContentAssistTest {
   }
   
   @Test
+  public void testUnqualifiedEcoreReferenceBeforeRemovalOfEClass() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("metamodel \"mypackage\"");
+    _builder.newLine();
+    _builder.append("modifyEcore aTest epackage mypackage {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ecoreref(");
+    _builder.append(this.cursor, "\t");
+    _builder.append(");");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("EClassifiers -= ecoreref(MyClass)");
+    _builder.newLine();
+    _builder.append("}");
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append("MyBaseClass");
+    _builder_1.newLine();
+    _builder_1.append("MyClass");
+    _builder_1.newLine();
+    _builder_1.append("MyDataType");
+    _builder_1.newLine();
+    _builder_1.append("MyDerivedClass");
+    _builder_1.newLine();
+    _builder_1.append("myAttribute");
+    _builder_1.newLine();
+    _builder_1.append("myBaseAttribute");
+    _builder_1.newLine();
+    _builder_1.append("myBaseReference");
+    _builder_1.newLine();
+    _builder_1.append("myDerivedAttribute");
+    _builder_1.newLine();
+    _builder_1.append("myDerivedReference");
+    _builder_1.newLine();
+    _builder_1.append("myReference");
+    _builder_1.newLine();
+    _builder_1.append("mypackage");
+    _builder_1.newLine();
+    this.testContentAssistant(_builder, 
+      ((List<String>)Conversions.doWrapArray(this.fromLinesOfStringsToStringArray(_builder_1))));
+  }
+  
+  @Test
   public void testQualifiedEcoreReferenceBeforeRemovalOfEClass() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("metamodel \"mypackage\"");
@@ -393,6 +470,280 @@ public class EdeltaContentAssistTest extends AbstractContentAssistTest {
     _builder.newLine();
     _builder.append("}");
     this.testContentAssistant(_builder, Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList("myAttribute", "myReference")));
+  }
+  
+  @Test
+  public void testQualifiedEcoreReferenceBeforeRemovalOfEStructuralFeature() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("metamodel \"mypackage\"");
+    _builder.newLine();
+    _builder.append("modifyEcore aTest epackage mypackage {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ecoreref(MyClass.");
+    _builder.append(this.cursor, "\t");
+    _builder.append(");");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("ecoreref(MyClass).EStructuralFeatures -= ecoreref(myReference)");
+    _builder.newLine();
+    _builder.append("}");
+    this.testContentAssistant(_builder, Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList("myAttribute", "myReference")));
+  }
+  
+  @Test
+  public void testQualifiedEcoreReferenceBeforeAdditionOfEStructuralFeature() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("metamodel \"mypackage\"");
+    _builder.newLine();
+    _builder.append("modifyEcore aTest epackage mypackage {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ecoreref(MyClass.");
+    _builder.append(this.cursor, "\t");
+    _builder.append(");");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("ecoreref(MyClass).addNewEAttribute(\"myNewAttribute\", null)");
+    _builder.newLine();
+    _builder.append("}");
+    this.testContentAssistant(_builder, Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList("myAttribute", "myReference")));
+  }
+  
+  @Test
+  public void testUnqualifiedEcoreReferenceAfterRemoval() {
+    try {
+      ContentAssistProcessorTestBuilder _newBuilder = this.newBuilder();
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("metamodel \"mypackage\"");
+      _builder.newLine();
+      _builder.append("modifyEcore aTest epackage mypackage { ");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("EClassifiers -= ecoreref(MyBaseClass)");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("ecoreref(");
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("MyClass");
+      _builder_1.newLine();
+      _builder_1.append("MyDataType");
+      _builder_1.newLine();
+      _builder_1.append("MyDerivedClass");
+      _builder_1.newLine();
+      _builder_1.append("myAttribute");
+      _builder_1.newLine();
+      _builder_1.append("myDerivedAttribute");
+      _builder_1.newLine();
+      _builder_1.append("myDerivedReference");
+      _builder_1.newLine();
+      _builder_1.append("myReference");
+      _builder_1.newLine();
+      _builder_1.append("mypackage");
+      _builder_1.newLine();
+      _newBuilder.append(_builder.toString()).assertText(this.fromLinesOfStringsToStringArray(_builder_1));
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testQualifiedEcoreReferenceAfterRemovalOfEStructuralFeature() {
+    try {
+      ContentAssistProcessorTestBuilder _newBuilder = this.newBuilder();
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("metamodel \"mypackage\"");
+      _builder.newLine();
+      _builder.append("modifyEcore aTest epackage mypackage { ");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("ecoreref(MyBaseClass).EStructuralFeatures -= ecoreref(myBaseAttribute)");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("ecoreref(MyBaseClass.");
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("myBaseReference");
+      _builder_1.newLine();
+      _newBuilder.append(_builder.toString()).assertText(this.fromLinesOfStringsToStringArray(_builder_1));
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testQualifiedEcoreReferenceAfterAdditionOfEStructuralFeature() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("metamodel \"mypackage\"");
+    _builder.newLine();
+    _builder.append("modifyEcore aTest epackage mypackage {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ecoreref(MyClass).addNewEAttribute(\"myNewAttribute\", null)");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ecoreref(MyClass.");
+    _builder.append(this.cursor, "\t");
+    _builder.append(");");
+    _builder.newLineIfNotEmpty();
+    _builder.append("}");
+    this.testContentAssistant(_builder, Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList("myAttribute", "myReference", "myNewAttribute")));
+  }
+  
+  @Test
+  public void testUnqualifiedEcoreReferenceBeforeRename() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("metamodel \"mypackage\"");
+    _builder.newLine();
+    _builder.append("modifyEcore aTest epackage mypackage {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ecoreref(");
+    _builder.append(this.cursor, "\t");
+    _builder.append(")");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("ecoreref(MyBaseClass).name = \"Renamed\"");
+    _builder.newLine();
+    _builder.append("}");
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append("MyBaseClass");
+    _builder_1.newLine();
+    _builder_1.append("MyClass");
+    _builder_1.newLine();
+    _builder_1.append("MyDataType");
+    _builder_1.newLine();
+    _builder_1.append("MyDerivedClass");
+    _builder_1.newLine();
+    _builder_1.append("myAttribute");
+    _builder_1.newLine();
+    _builder_1.append("myBaseAttribute");
+    _builder_1.newLine();
+    _builder_1.append("myBaseReference");
+    _builder_1.newLine();
+    _builder_1.append("myDerivedAttribute");
+    _builder_1.newLine();
+    _builder_1.append("myDerivedReference");
+    _builder_1.newLine();
+    _builder_1.append("myReference");
+    _builder_1.newLine();
+    _builder_1.append("mypackage");
+    _builder_1.newLine();
+    this.testContentAssistant(_builder, 
+      ((List<String>)Conversions.doWrapArray(this.fromLinesOfStringsToStringArray(_builder_1))));
+  }
+  
+  @Test
+  public void testUnqualifiedEcoreReferenceAfterRename() {
+    try {
+      ContentAssistProcessorTestBuilder _newBuilder = this.newBuilder();
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("metamodel \"mypackage\"");
+      _builder.newLine();
+      _builder.append("modifyEcore aTest epackage mypackage { ");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("ecoreref(MyBaseClass).name = \"Renamed\"");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("ecoreref(");
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("MyClass");
+      _builder_1.newLine();
+      _builder_1.append("MyDataType");
+      _builder_1.newLine();
+      _builder_1.append("MyDerivedClass");
+      _builder_1.newLine();
+      _builder_1.append("Renamed");
+      _builder_1.newLine();
+      _builder_1.append("myAttribute");
+      _builder_1.newLine();
+      _builder_1.append("myBaseAttribute");
+      _builder_1.newLine();
+      _builder_1.append("myBaseReference");
+      _builder_1.newLine();
+      _builder_1.append("myDerivedAttribute");
+      _builder_1.newLine();
+      _builder_1.append("myDerivedReference");
+      _builder_1.newLine();
+      _builder_1.append("myReference");
+      _builder_1.newLine();
+      _builder_1.append("mypackage");
+      _builder_1.newLine();
+      _newBuilder.append(_builder.toString()).assertText(this.fromLinesOfStringsToStringArray(_builder_1));
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testForAmbiguousReferencesFullyQualifiedNameIsProposed() {
+    try {
+      this.createMySubPackagesEcore();
+      IResourcesSetupUtil.waitForBuild();
+      ContentAssistProcessorTestBuilder _newBuilder = this.newBuilder();
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("metamodel \"mainpackage\"");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("modifyEcore aTest epackage mainpackage {");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("ecoreref(My");
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("MySubPackageClass");
+      _builder_1.newLine();
+      _builder_1.append("mainpackage.MyClass");
+      _builder_1.newLine();
+      _builder_1.append("mainpackage.MyClass.myAttribute");
+      _builder_1.newLine();
+      _builder_1.append("mainpackage.MyClass.myReference");
+      _builder_1.newLine();
+      _builder_1.append("mainpackage.subpackage.MyClass");
+      _builder_1.newLine();
+      _builder_1.append("mainpackage.subpackage.MyClass.myAttribute");
+      _builder_1.newLine();
+      _builder_1.append("mainpackage.subpackage.MyClass.myReference");
+      _builder_1.newLine();
+      _builder_1.append("mainpackage.subpackage.subsubpackage.MyClass");
+      _builder_1.newLine();
+      _builder_1.append("mainpackage.subpackage.subsubpackage.MyClass.myAttribute");
+      _builder_1.newLine();
+      _builder_1.append("mainpackage.subpackage.subsubpackage.MyClass.myReference");
+      _builder_1.newLine();
+      _newBuilder.append(_builder.toString()).assertText(
+        this.fromLinesOfStringsToStringArray(_builder_1));
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testForAmbiguousReferencesFullyQualifiedNameIsReplaced() {
+    try {
+      this.createMySubPackagesEcore();
+      IResourcesSetupUtil.waitForBuild();
+      ContentAssistProcessorTestBuilder _newBuilder = this.newBuilder();
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("metamodel \"mainpackage\"");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("modifyEcore aTest epackage mainpackage {");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("ecoreref(My");
+      ContentAssistProcessorTestBuilder _applyProposal = _newBuilder.append(_builder.toString()).applyProposal("mainpackage.subpackage.MyClass.myAttribute");
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("metamodel \"mainpackage\"");
+      _builder_1.newLine();
+      _builder_1.newLine();
+      _builder_1.append("modifyEcore aTest epackage mainpackage {");
+      _builder_1.newLine();
+      _builder_1.append("\t");
+      _builder_1.append("ecoreref(mainpackage.subpackage.MyClass.myAttribute");
+      _applyProposal.expectContent(_builder_1.toString());
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   private String[] fromLinesOfStringsToStringArray(final CharSequence strings) {

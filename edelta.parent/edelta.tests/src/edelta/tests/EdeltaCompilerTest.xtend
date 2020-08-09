@@ -167,6 +167,7 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			package foo;
 			
 			import edelta.lib.AbstractEdelta;
+			import edelta.lib.EdeltaLibrary;
 			import org.eclipse.emf.ecore.EClass;
 			
 			@SuppressWarnings("all")
@@ -180,7 +181,7 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			  }
 			  
 			  public EClass bar(final String s) {
-			    return this.lib.newEClass(s);
+			    return EdeltaLibrary.newEClass(s);
 			  }
 			}
 			'''
@@ -194,6 +195,7 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			package foo;
 			
 			import edelta.lib.AbstractEdelta;
+			import edelta.lib.EdeltaLibrary;
 			import java.util.function.Consumer;
 			import org.eclipse.emf.common.util.EList;
 			import org.eclipse.emf.ecore.EClass;
@@ -211,10 +213,10 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			  public EClass bar(final String s) {
 			    final Consumer<EClass> _function = (EClass it) -> {
 			      EList<EClass> _eSuperTypes = it.getESuperTypes();
-			      EClass _newEClass = this.lib.newEClass("Base");
+			      EClass _newEClass = EdeltaLibrary.newEClass("Base");
 			      _eSuperTypes.add(_newEClass);
 			    };
-			    return this.lib.newEClass(s, _function);
+			    return EdeltaLibrary.newEClass(s, _function);
 			  }
 			}
 			'''
@@ -345,6 +347,7 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			package edelta;
 			
 			import edelta.lib.AbstractEdelta;
+			import edelta.lib.EdeltaLibrary;
 			import org.eclipse.emf.ecore.EPackage;
 			
 			@SuppressWarnings("all")
@@ -358,7 +361,7 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			  }
 			  
 			  public void aTest(final EPackage it) {
-			    this.lib.addNewEClass(it, "NewClass");
+			    EdeltaLibrary.addNewEClass(it, "NewClass");
 			  }
 			  
 			  public void anotherTest(final EPackage it) {
@@ -392,6 +395,7 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			package edelta;
 			
 			import edelta.lib.AbstractEdelta;
+			import edelta.lib.EdeltaLibrary;
 			import org.eclipse.emf.ecore.EPackage;
 			
 			@SuppressWarnings("all")
@@ -405,7 +409,7 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			  }
 			  
 			  public void creation(final EPackage it) {
-			    this.lib.addNewEClass(it, "NewClass");
+			    EdeltaLibrary.addNewEClass(it, "NewClass");
 			  }
 			  
 			  public void renaming(final EPackage it) {
@@ -651,6 +655,7 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			package edelta;
 			
 			import edelta.lib.AbstractEdelta;
+			import edelta.lib.EdeltaLibrary;
 			import java.util.function.Consumer;
 			import org.eclipse.emf.common.util.EList;
 			import org.eclipse.emf.ecore.EClass;
@@ -671,10 +676,10 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			    EList<EClassifier> _eClassifiers = it.getEClassifiers();
 			    final Consumer<EClass> _function = (EClass it_1) -> {
 			      EList<EClass> _eSuperTypes = it_1.getESuperTypes();
-			      EClass _newEClass = this.lib.newEClass("Base");
+			      EClass _newEClass = EdeltaLibrary.newEClass("Base");
 			      _eSuperTypes.add(_newEClass);
 			    };
-			    EClass _newEClass = this.lib.newEClass("ANewClass", _function);
+			    EClass _newEClass = EdeltaLibrary.newEClass("ANewClass", _function);
 			    _eClassifiers.add(_newEClass);
 			  }
 			  
@@ -709,6 +714,7 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			package edelta;
 			
 			import edelta.lib.AbstractEdelta;
+			import edelta.lib.EdeltaLibrary;
 			import org.eclipse.emf.common.util.EList;
 			import org.eclipse.emf.ecore.EAttribute;
 			import org.eclipse.emf.ecore.EClass;
@@ -730,7 +736,7 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			  public void modifyFoo(final EPackage it) {
 			    getEClass("foo", "FooClass").setName("RenamedClass");
 			    EList<EStructuralFeature> _eStructuralFeatures = getEClass("foo", "RenamedClass").getEStructuralFeatures();
-			    EAttribute _newEAttribute = this.lib.newEAttribute("anotherAttr", getEDataType("foo", "FooDataType"));
+			    EAttribute _newEAttribute = EdeltaLibrary.newEAttribute("anotherAttr", getEDataType("foo", "FooDataType"));
 			    _eStructuralFeatures.add(_newEAttribute);
 			    getEClass("foo", "RenamedClass").setAbstract(true);
 			    final Procedure1<EClass> _function = (EClass it_1) -> {
@@ -788,6 +794,7 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			package edelta;
 			
 			import edelta.lib.AbstractEdelta;
+			import edelta.lib.EdeltaLibrary;
 			import java.util.function.Consumer;
 			import org.eclipse.emf.ecore.EClass;
 			import org.eclipse.emf.ecore.EPackage;
@@ -804,9 +811,9 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			  
 			  public void aTest(final EPackage it) {
 			    final Consumer<EClass> _function = (EClass it_1) -> {
-			      this.lib.addEAttribute(it_1, getEAttribute("foo", "FooClass", "myAttribute"));
+			      EdeltaLibrary.addEAttribute(it_1, getEAttribute("foo", "FooClass", "myAttribute"));
 			    };
-			    this.lib.addNewEClass(it, "NewClass", _function);
+			    EdeltaLibrary.addNewEClass(it, "NewClass", _function);
 			  }
 			  
 			  @Override
@@ -879,6 +886,7 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			package edelta;
 			
 			import edelta.lib.AbstractEdelta;
+			import edelta.lib.EdeltaLibrary;
 			import java.util.function.Consumer;
 			import org.eclipse.emf.ecore.EAttribute;
 			import org.eclipse.emf.ecore.EClass;
@@ -902,21 +910,21 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			      final Consumer<EAttribute> _function_1 = (EAttribute it_2) -> {
 			        it_2.setLowerBound(1);
 			      };
-			      this.lib.addNewEAttribute(it_1, "ANewAttribute", getEDataType("foo", "FooDataType"), _function_1);
+			      EdeltaLibrary.addNewEAttribute(it_1, "ANewAttribute", getEDataType("foo", "FooDataType"), _function_1);
 			      final Consumer<EReference> _function_2 = (EReference it_2) -> {
 			        it_2.setLowerBound(1);
 			      };
-			      this.lib.addNewEReference(it_1, "ANewReference", getEClass("foo", "FooClass"), _function_2);
+			      EdeltaLibrary.addNewEReference(it_1, "ANewReference", getEClass("foo", "FooClass"), _function_2);
 			    };
-			    this.lib.addNewEClass(it, "ANewClass", _function);
+			    EdeltaLibrary.addNewEClass(it, "ANewClass", _function);
 			    final Consumer<EEnum> _function_1 = (EEnum it_1) -> {
 			      final Consumer<EEnumLiteral> _function_2 = (EEnumLiteral it_2) -> {
 			        it_2.setValue(10);
 			      };
-			      this.lib.addNewEEnumLiteral(it_1, "ANewEnumLiteral", _function_2);
+			      EdeltaLibrary.addNewEEnumLiteral(it_1, "ANewEnumLiteral", _function_2);
 			    };
-			    this.lib.addNewEEnum(it, "ANewEnum", _function_1);
-			    this.lib.addNewEDataType(it, "ANewDataType", "java.lang.String");
+			    EdeltaLibrary.addNewEEnum(it, "ANewEnum", _function_1);
+			    EdeltaLibrary.addNewEDataType(it, "ANewDataType", "java.lang.String");
 			    getEClass("foo", "ANewClass");
 			    getEAttribute("foo", "ANewClass", "ANewAttribute");
 			    getEReference("foo", "ANewClass", "ANewReference");
@@ -1011,6 +1019,7 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			package edelta;
 			
 			import edelta.lib.AbstractEdelta;
+			import edelta.lib.EdeltaLibrary;
 			import java.util.function.Consumer;
 			import org.eclipse.emf.common.util.EList;
 			import org.eclipse.emf.ecore.EAttribute;
@@ -1032,20 +1041,20 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			  public void modifyFoo(final EPackage it) {
 			    final Consumer<EPackage> _function = (EPackage it_1) -> {
 			      final Consumer<EPackage> _function_1 = (EPackage it_2) -> {
-			        this.lib.addNewEClass(it_2, "ANestedSubPackageClass");
+			        EdeltaLibrary.addNewEClass(it_2, "ANestedSubPackageClass");
 			      };
-			      this.lib.addNewESubpackage(it_1, "anestedsubpackage", "aprefix2", "aURI2", _function_1);
+			      EdeltaLibrary.addNewESubpackage(it_1, "anestedsubpackage", "aprefix2", "aURI2", _function_1);
 			    };
-			    this.lib.addNewESubpackage(it, "anewsubpackage", "aprefix", "aURI", _function);
+			    EdeltaLibrary.addNewESubpackage(it, "anewsubpackage", "aprefix", "aURI", _function);
 			    final Consumer<EClass> _function_1 = (EClass it_1) -> {
 			      EList<EStructuralFeature> _eStructuralFeatures = it_1.getEStructuralFeatures();
-			      EReference _newEReference = this.lib.newEReference("newTestRef", getEClass("foo.anewsubpackage.anestedsubpackage", "ANestedSubPackageClass"));
+			      EReference _newEReference = EdeltaLibrary.newEReference("newTestRef", getEClass("foo.anewsubpackage.anestedsubpackage", "ANestedSubPackageClass"));
 			      _eStructuralFeatures.add(_newEReference);
 			    };
-			    this.lib.addNewEClass(getEPackage("foo.anewsubpackage"), "NewClass", _function_1);
+			    EdeltaLibrary.addNewEClass(getEPackage("foo.anewsubpackage"), "NewClass", _function_1);
 			    getEClass("foo.anewsubpackage", "NewClass").setName("RenamedClass");
 			    EList<EStructuralFeature> _eStructuralFeatures = getEClass("foo.anewsubpackage", "RenamedClass").getEStructuralFeatures();
-			    EAttribute _newEAttribute = this.lib.newEAttribute("added", getEDataType("foo", "FooDataType"));
+			    EAttribute _newEAttribute = EdeltaLibrary.newEAttribute("added", getEDataType("foo", "FooDataType"));
 			    _eStructuralFeatures.add(_newEAttribute);
 			  }
 			  
@@ -1186,7 +1195,7 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 
 	@Test
 	def void testCompilationOfRenameReferencesAcrossEPackagesSingleModifyEcore() {
-		// it is crucial to use real ecore files so that we mimick what happens in
+		// it is crucial to use real ecore files so that we mimic what happens in
 		// the workbench and make sure that original ecores are not modified.
 		val rs = createResourceSetWithEcores(
 		#[TEST1_REFS_ECORE, TEST2_REFS_ECORE],
@@ -1289,6 +1298,147 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 				    <eStructuralFeatures xsi:type="ecore:EReference" name="renamedPersons" upperBound="-1"
 				        eType="ecore:EClass TestEcoreForReferences1.ecore#//Person" eOpposite="TestEcoreForReferences1.ecore#//Person/renamedWorks"/>
 				    <eStructuralFeatures xsi:type="ecore:EAttribute" name="address" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+				  </eClassifiers>
+				</ecore:EPackage>
+				'''
+			],
+			true
+		)
+	}
+
+	@Test
+	def void testExecutionOfModificationsOfMetamodelsAcrossSeveralFilesIntroducingDepOnAnotherMetamodel() {
+		checkCompiledCodeExecutionWithSeveralFiles(
+			#[SIMPLE_ECORE, ANOTHER_SIMPLE_ECORE],
+			#[
+				'''
+					import org.eclipse.emf.ecore.EClass
+					
+					package test1
+					
+					metamodel "simple"
+					
+					def setBaseClass(EClass c) : void {
+						c.getESuperTypes += ecoreref(SimpleClass)
+					}
+				''',
+				'''
+					import org.eclipse.emf.ecore.EClass
+					import test1.MyFile0
+					
+					package test2
+					
+					metamodel "anothersimple"
+					
+					use test1.MyFile0 as extension my
+					
+					modifyEcore aModificationTest epackage anothersimple {
+						// the other file's operation will set the
+						// base class of this package class to another package class
+						ecoreref(AnotherSimpleClass).setBaseClass
+						// now anothersimple refers to simple
+						// now modify the abstract property of the
+						// superclass in the other package
+						ecoreref(AnotherSimpleClass).ESuperTypes.head.abstract = true
+					}
+				'''
+			],
+			"test2.MyFile1",
+			#[
+				SIMPLE_ECORE ->
+				'''
+				<?xml version="1.0" encoding="UTF-8"?>
+				<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="simple" nsURI="http://www.simple" nsPrefix="simple">
+				  <eClassifiers xsi:type="ecore:EClass" name="SimpleClass" abstract="true"/>
+				</ecore:EPackage>
+				''',
+				ANOTHER_SIMPLE_ECORE ->
+				'''
+				<?xml version="1.0" encoding="UTF-8"?>
+				<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="anothersimple" nsURI="http://www.anothersimple" nsPrefix="anothersimple">
+				  <eClassifiers xsi:type="ecore:EClass" name="AnotherSimpleClass" eSuperTypes="Simple.ecore#//SimpleClass"/>
+				</ecore:EPackage>
+				'''
+			],
+			true
+		)
+	}
+
+	@Test
+	def void testExecutionOfModificationsOfMetamodelsAcrossSeveralFilesIntroducingMutualDepOnAnotherMetamodel() {
+		checkCompiledCodeExecutionWithSeveralFiles(
+			#[SIMPLE_ECORE, ANOTHER_SIMPLE_ECORE],
+			#[
+				'''
+					import org.eclipse.emf.ecore.EClass
+					
+					package test1
+					
+					metamodel "simple"
+					
+					def setBaseClass(EClass c) : void {
+						c.getESuperTypes += ecoreref(SimpleClass)
+					}
+				''',
+				'''
+					import org.eclipse.emf.ecore.EClass
+					import test1.MyFile0
+					
+					package test2
+					
+					metamodel "anothersimple"
+					
+					use test1.MyFile0 as extension my
+					
+					modifyEcore aModificationTest epackage anothersimple {
+						// the other file's operation will set the
+						// base class of this package class to another package class
+						ecoreref(AnotherSimpleClass).setBaseClass
+						// now anothersimple refers to simple (created dependency)
+					
+						val referenceToSuperClass = ecoreref(AnotherSimpleClass).ESuperTypes.head
+					
+						// also add a reference to the other epackage
+						ecoreref(AnotherSimpleClass)
+							.addNewEReference(
+								"aReferenceToSimpleClass",
+								referenceToSuperClass
+							)
+					
+						// now modify the superclass in the other package
+						// introducing a mutual dependency
+						referenceToSuperClass
+							.addNewEReference("aReferenceToAnotherSimpleClass", ecoreref(AnotherSimpleClass)) [
+								// also make the references bidirectional
+								EOpposite = ecoreref(aReferenceToSimpleClass)
+								ecoreref(aReferenceToSimpleClass).EOpposite = it
+							]
+					}
+				'''
+			],
+			"test2.MyFile1",
+			#[
+				SIMPLE_ECORE ->
+				'''
+				<?xml version="1.0" encoding="UTF-8"?>
+				<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="simple" nsURI="http://www.simple" nsPrefix="simple">
+				  <eClassifiers xsi:type="ecore:EClass" name="SimpleClass">
+				    <eStructuralFeatures xsi:type="ecore:EReference" name="aReferenceToAnotherSimpleClass"
+				        eType="ecore:EClass AnotherSimple.ecore#//AnotherSimpleClass" eOpposite="AnotherSimple.ecore#//AnotherSimpleClass/aReferenceToSimpleClass"/>
+				  </eClassifiers>
+				</ecore:EPackage>
+				''',
+				ANOTHER_SIMPLE_ECORE ->
+				'''
+				<?xml version="1.0" encoding="UTF-8"?>
+				<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="anothersimple" nsURI="http://www.anothersimple" nsPrefix="anothersimple">
+				  <eClassifiers xsi:type="ecore:EClass" name="AnotherSimpleClass" eSuperTypes="Simple.ecore#//SimpleClass">
+				    <eStructuralFeatures xsi:type="ecore:EReference" name="aReferenceToSimpleClass"
+				        eType="ecore:EClass Simple.ecore#//SimpleClass" eOpposite="Simple.ecore#//SimpleClass/aReferenceToAnotherSimpleClass"/>
 				  </eClassifiers>
 				</ecore:EPackage>
 				'''
@@ -1432,6 +1582,139 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 	}
 
 	@Test
+	def void testCompilationOfNonAmbiguousEcorerefAfterRemoval() {
+		val rs = createResourceSet(
+		'''
+			import org.eclipse.emf.ecore.EAttribute
+			import org.eclipse.emf.ecore.EReference
+			
+			metamodel "mainpackage"
+			
+			modifyEcore aTest epackage mainpackage {
+				addNewEClass("ANewClass") [
+					addNewEAttribute("created", null)
+				]
+				addNewEClass("AnotherNewClass") [
+					addNewEReference("created", null)
+				]
+				EClassifiers -= ecoreref(ANewClass)
+				// "created" is not ambiguous anymore
+				// and it's correctly typed (EReference, not EAttribute)
+				val EReference r = ecoreref(created) // OK
+			}
+		''')
+		rs.addEPackageWithSubPackageForTests
+		checkCompilation(rs,
+			'''
+			package edelta;
+			
+			import edelta.lib.AbstractEdelta;
+			import edelta.lib.EdeltaLibrary;
+			import java.util.function.Consumer;
+			import org.eclipse.emf.common.util.EList;
+			import org.eclipse.emf.ecore.EClass;
+			import org.eclipse.emf.ecore.EClassifier;
+			import org.eclipse.emf.ecore.EPackage;
+			import org.eclipse.emf.ecore.EReference;
+			
+			@SuppressWarnings("all")
+			public class MyFile0 extends AbstractEdelta {
+			  public MyFile0() {
+			    
+			  }
+			  
+			  public MyFile0(final AbstractEdelta other) {
+			    super(other);
+			  }
+			  
+			  public void aTest(final EPackage it) {
+			    final Consumer<EClass> _function = (EClass it_1) -> {
+			      EdeltaLibrary.addNewEAttribute(it_1, "created", null);
+			    };
+			    EdeltaLibrary.addNewEClass(it, "ANewClass", _function);
+			    final Consumer<EClass> _function_1 = (EClass it_1) -> {
+			      EdeltaLibrary.addNewEReference(it_1, "created", null);
+			    };
+			    EdeltaLibrary.addNewEClass(it, "AnotherNewClass", _function_1);
+			    EList<EClassifier> _eClassifiers = it.getEClassifiers();
+			    _eClassifiers.remove(getEClass("mainpackage", "ANewClass"));
+			    final EReference r = getEReference("mainpackage", "AnotherNewClass", "created");
+			  }
+			  
+			  @Override
+			  public void performSanityChecks() throws Exception {
+			    ensureEPackageIsLoaded("mainpackage");
+			  }
+			  
+			  @Override
+			  protected void doExecute() throws Exception {
+			    aTest(getEPackage("mainpackage"));
+			  }
+			}
+			''',
+			true
+		)
+	}
+
+	@Test def void testEcoreRefExpForCreatedEClassInInitializer() {
+		'''
+			import org.eclipse.emf.ecore.EcoreFactory
+			
+			metamodel "foo"
+			
+			modifyEcore aTest epackage foo {
+				addNewEClass("NewClass") [
+					// even though the name is set after the initializer
+					// is executed we can still refer the newly created EClass
+					ecoreref(NewClass).abstract = true
+					ecoreref(NewClass).name = "Renamed"
+				]
+				ecoreref(Renamed)
+			}
+		'''.checkCompilation(
+			'''
+			package edelta;
+			
+			import edelta.lib.AbstractEdelta;
+			import edelta.lib.EdeltaLibrary;
+			import java.util.function.Consumer;
+			import org.eclipse.emf.ecore.EClass;
+			import org.eclipse.emf.ecore.EPackage;
+			
+			@SuppressWarnings("all")
+			public class MyFile0 extends AbstractEdelta {
+			  public MyFile0() {
+			    
+			  }
+			  
+			  public MyFile0(final AbstractEdelta other) {
+			    super(other);
+			  }
+			  
+			  public void aTest(final EPackage it) {
+			    final Consumer<EClass> _function = (EClass it_1) -> {
+			      getEClass("foo", "NewClass").setAbstract(true);
+			      getEClass("foo", "NewClass").setName("Renamed");
+			    };
+			    EdeltaLibrary.addNewEClass(it, "NewClass", _function);
+			    getEClass("foo", "Renamed");
+			  }
+			  
+			  @Override
+			  public void performSanityChecks() throws Exception {
+			    ensureEPackageIsLoaded("foo");
+			  }
+			  
+			  @Override
+			  protected void doExecute() throws Exception {
+			    aTest(getEPackage("foo"));
+			  }
+			}
+			'''
+		)
+	}
+
+	@Test
 	def void testCompilationOfPersonListExampleModifyEcore() {
 		val rs = createResourceSetWithEcores(
 			#[PERSON_LIST_ECORE],
@@ -1443,6 +1726,7 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			package edelta.personlist.example;
 			
 			import edelta.lib.AbstractEdelta;
+			import edelta.lib.EdeltaLibrary;
 			import edelta.refactorings.lib.EdeltaRefactorings;
 			import java.util.Collections;
 			import java.util.function.Consumer;
@@ -1473,7 +1757,7 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			      this.refactorings.introduceSubclasses(it_1, 
 			        getEAttribute("PersonList", "Person", "gender"), 
 			        getEEnum("PersonList", "Gender"));
-			      this.lib.addEAttribute(it_1, 
+			      EdeltaLibrary.addEAttribute(it_1, 
 			        this.refactorings.mergeAttributes("name", 
 			          getEAttribute("PersonList", "Person", "firstname").getEAttributeType(), 
 			          Collections.<EAttribute>unmodifiableList(CollectionLiterals.<EAttribute>newArrayList(getEAttribute("PersonList", "Person", "firstname"), getEAttribute("PersonList", "Person", "lastname")))));
@@ -1487,19 +1771,19 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			      it_1.setAbstract(true);
 			      this.refactorings.extractIntoSuperclass(it_1, Collections.<EAttribute>unmodifiableList(CollectionLiterals.<EAttribute>newArrayList(getEAttribute("PersonList", "LivingPlace", "address"), getEAttribute("PersonList", "WorkPlace", "address"))));
 			    };
-			    this.lib.addNewEClass(it, "Place", _function);
+			    EdeltaLibrary.addNewEClass(it, "Place", _function);
 			  }
 			  
 			  public void introduceWorkingPosition(final EPackage it) {
 			    final Consumer<EClass> _function = (EClass it_1) -> {
-			      this.lib.addNewEAttribute(it_1, "description", getEDataType("ecore", "EString"));
+			      EdeltaLibrary.addNewEAttribute(it_1, "description", getEDataType("ecore", "EString"));
 			      this.refactorings.extractMetaClass(it_1, getEReference("PersonList", "Person", "works"), "position", "works");
 			    };
-			    this.lib.addNewEClass(it, "WorkingPosition", _function);
+			    EdeltaLibrary.addNewEClass(it, "WorkingPosition", _function);
 			  }
 			  
 			  public void improveList(final EPackage it) {
-			    this.lib.addEReference(getEClass("PersonList", "List"), 
+			    EdeltaLibrary.addEReference(getEClass("PersonList", "List"), 
 			      this.refactorings.mergeReferences("places", 
 			        getEClass("PersonList", "Place"), 
 			        Collections.<EReference>unmodifiableList(CollectionLiterals.<EReference>newArrayList(getEReference("PersonList", "List", "wplaces"), getEReference("PersonList", "List", "lplaces")))));
@@ -1578,16 +1862,20 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 	}
 
 	def private createResourceSet(CharSequence... inputs) {
-		val pairs = newArrayList() => [
+		val pairs = createInputPairs(inputs)
+		val rs = resourceSet(pairs)
+		addEPackageForTests(rs)
+		return rs
+	}
+
+	def private createInputPairs(CharSequence[] inputs) {
+		newArrayList() => [
 			list |
 			inputs.forEach[e, i|
 				list += "MyFile" + i + "." + 
 					extensionProvider.getPrimaryFileExtension() -> e
 			]
 		]
-		val rs = resourceSet(pairs)
-		addEPackageForTests(rs)
-		return rs
 	}
 
 	def private createResourceSetWithEcores(List<String> ecoreNames, CharSequence input) {
@@ -1600,6 +1888,18 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 			ecoreNames.map[ecoreName |
 				ecoreName -> EdeltaTestUtils.loadFile(METAMODEL_PATH + ecoreName)]
 		val rs = resourceSet(pairs)
+		return rs
+	}
+
+	def private createResourceSetWithEcoresAndSeveralInputs(List<String> ecoreNames, List<CharSequence> inputs) {
+		val ecorePairs = newArrayList(
+			ECORE_ECORE -> EdeltaTestUtils.loadFile(METAMODEL_PATH + ECORE_ECORE)
+		)
+		ecorePairs +=
+			ecoreNames.map[ecoreName |
+				ecoreName -> EdeltaTestUtils.loadFile(METAMODEL_PATH + ecoreName)]
+		val inputPairs = createInputPairs(inputs)
+		val rs = resourceSet(ecorePairs + inputPairs)
 		return rs
 	}
 
@@ -1638,20 +1938,43 @@ class EdeltaCompilerTest extends EdeltaAbstractTest {
 				assertGeneratedJavaCodeCompiles
 			}
 			val genClass = compiledClass
-			val edeltaObj = genClass.getDeclaredConstructor().newInstance()
-			// load ecore files
-			for (ecoreName : ecoreNames) {
-				edeltaObj.invoke("loadEcoreFile", #[METAMODEL_PATH + ecoreName])
-			}
-			edeltaObj.invoke("execute")
-			edeltaObj.invoke("saveModifiedEcores", #[MODIFIED])
-			for (expected : expectedModifiedEcores) {
-				compareSingleFileContents(
-					MODIFIED+"/"+expected.key,
-					expected.value.toString
-				)
-			}
+			checkExecutionAndAssertExpectedModifiedEcores(genClass, ecoreNames, expectedModifiedEcores)
 		]
+	}
+
+	def private checkCompiledCodeExecutionWithSeveralFiles(List<String> ecoreNames,
+			List<CharSequence> inputs,
+			String classToExecute,
+			List<Pair<CharSequence, CharSequence>> expectedModifiedEcores,
+			boolean checkValidationErrors) {
+		wipeModifiedDirectoryContents
+		val rs = createResourceSetWithEcoresAndSeveralInputs(ecoreNames, inputs)
+		rs.compile [
+			if (checkValidationErrors) {
+				assertNoValidationErrors
+			}
+			if (checkValidationErrors) {
+				assertGeneratedJavaCodeCompiles
+			}
+			val genClass = getCompiledClass(classToExecute)
+			checkExecutionAndAssertExpectedModifiedEcores(genClass, ecoreNames, expectedModifiedEcores)
+		]
+	}
+
+	private def void checkExecutionAndAssertExpectedModifiedEcores(Class<?> genClass, List<String> ecoreNames, List<Pair<CharSequence, CharSequence>> expectedModifiedEcores) {
+		val edeltaObj = genClass.getDeclaredConstructor().newInstance()
+		// load ecore files
+		for (ecoreName : ecoreNames) {
+			edeltaObj.invoke("loadEcoreFile", #[METAMODEL_PATH + ecoreName])
+		}
+		edeltaObj.invoke("execute")
+		edeltaObj.invoke("saveModifiedEcores", #[MODIFIED])
+		for (expected : expectedModifiedEcores) {
+			compareSingleFileContents(
+				MODIFIED+"/"+expected.key,
+				expected.value.toString
+			)
+		}
 	}
 
 	def private void wipeModifiedDirectoryContents() {

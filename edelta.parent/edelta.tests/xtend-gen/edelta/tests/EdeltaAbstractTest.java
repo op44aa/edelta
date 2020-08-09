@@ -11,6 +11,8 @@ import edelta.edelta.EdeltaEcoreReferenceExpression;
 import edelta.edelta.EdeltaModifyEcoreOperation;
 import edelta.edelta.EdeltaOperation;
 import edelta.edelta.EdeltaProgram;
+import edelta.resource.derivedstate.EdeltaAccessibleElement;
+import edelta.resource.derivedstate.EdeltaAccessibleElements;
 import edelta.tests.EdeltaInjectorProvider;
 import edelta.tests.input.Inputs;
 import java.nio.file.Paths;
@@ -53,6 +55,7 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.junit.Assert;
@@ -90,13 +93,40 @@ public abstract class EdeltaAbstractTest {
   
   protected static String TEST2_REFS_ECORE = "TestEcoreForReferences2.ecore";
   
+  protected static String SIMPLE_ECORE = "Simple.ecore";
+  
+  protected static String ANOTHER_SIMPLE_ECORE = "AnotherSimple.ecore";
+  
   /**
-   * Parse several input sources and returns the parsed program corresponding
+   * Parse several input sources using the "foo" EPackage
+   * and returns the parsed program corresponding
    * to the last input source.
    */
   protected EdeltaProgram parseSeveralWithTestEcore(final List<CharSequence> inputs) {
-    try {
+    EdeltaProgram _xblockexpression = null;
+    {
       final ResourceSet rs = this.resourceSetWithTestEcore();
+      _xblockexpression = this.parseSeveralInputs(inputs, rs);
+    }
+    return _xblockexpression;
+  }
+  
+  /**
+   * Parse several input sources using the "foo" and "bar" EPackages
+   * and returns the parsed program corresponding
+   * to the last input source.
+   */
+  protected EdeltaProgram parseSeveralWithTestEcores(final List<CharSequence> inputs) {
+    EdeltaProgram _xblockexpression = null;
+    {
+      final ResourceSet rs = this.resourceSetWithTestEcores();
+      _xblockexpression = this.parseSeveralInputs(inputs, rs);
+    }
+    return _xblockexpression;
+  }
+  
+  protected EdeltaProgram parseSeveralInputs(final List<CharSequence> inputs, final ResourceSet rs) {
+    try {
       EdeltaProgram program = null;
       for (final CharSequence input : inputs) {
         program = this._parseHelper.parse(input, rs);
@@ -554,6 +584,18 @@ public abstract class EdeltaAbstractTest {
       return it.getName();
     };
     String _join = IterableExtensions.join(IterableExtensions.map(elements, _function), "\n");
+    String _plus = (_join + "\n");
+    this.assertEqualsStrings(expected, _plus);
+  }
+  
+  protected void assertAccessibleElements(final EdeltaAccessibleElements elements, final CharSequence expected) {
+    final Function1<EdeltaAccessibleElement, String> _function = (EdeltaAccessibleElement it) -> {
+      return it.getQualifiedName().toString();
+    };
+    final Function1<String, String> _function_1 = (String it) -> {
+      return it;
+    };
+    String _join = IterableExtensions.join(IterableExtensions.<String, String>sortBy(ListExtensions.<EdeltaAccessibleElement, String>map(elements, _function), _function_1), "\n");
     String _plus = (_join + "\n");
     this.assertEqualsStrings(expected, _plus);
   }

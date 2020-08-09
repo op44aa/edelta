@@ -9,8 +9,8 @@ import edelta.compiler.EdeltaXbaseCompiler
 import edelta.interpreter.EdeltaInterpreter
 import edelta.interpreter.EdeltaSafeInterpreter
 import edelta.resource.EdeltaDerivedStateComputer
-import edelta.resource.EdeltaLocationInFileProvider
 import edelta.resource.EdeltaResourceDescriptionStrategy
+import edelta.scoping.EdeltaImplicitlyImportedFeatures
 import edelta.scoping.EdeltaQualifiedNameProvider
 import edelta.typesystem.EdeltaTypeComputer
 import edelta.validation.EdeltaDiagnosticConverter
@@ -19,6 +19,7 @@ import org.eclipse.xtext.generator.IOutputConfigurationProvider
 import org.eclipse.xtext.validation.IDiagnosticConverter
 import org.eclipse.xtext.xbase.compiler.IGeneratorConfigProvider
 import org.eclipse.xtext.xbase.compiler.XbaseCompiler
+import org.eclipse.xtext.xbase.scoping.batch.ImplicitlyImportedFeatures
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
@@ -35,10 +36,6 @@ class EdeltaRuntimeModule extends AbstractEdeltaRuntimeModule {
 
 	override bindIDerivedStateComputer() {
 		EdeltaDerivedStateComputer
-	}
-
-	override bindILocationInFileProvider() {
-		EdeltaLocationInFileProvider
 	}
 
 	override bindIDefaultResourceDescriptionStrategy() {
@@ -69,4 +66,7 @@ class EdeltaRuntimeModule extends AbstractEdeltaRuntimeModule {
 		return EdeltaOutputConfigurationProvider
 	}
 
+	def Class<? extends ImplicitlyImportedFeatures> bindImplicitlyImportedFeatures() {
+		return EdeltaImplicitlyImportedFeatures
+	}
 }

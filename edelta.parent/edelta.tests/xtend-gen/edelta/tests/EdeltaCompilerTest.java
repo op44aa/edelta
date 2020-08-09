@@ -290,6 +290,8 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.newLine();
     _builder.append("import edelta.lib.AbstractEdelta;");
     _builder.newLine();
+    _builder.append("import edelta.lib.EdeltaLibrary;");
+    _builder.newLine();
     _builder.append("import org.eclipse.emf.ecore.EClass;");
     _builder.newLine();
     _builder.newLine();
@@ -322,7 +324,7 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.append("public EClass bar(final String s) {");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("return this.lib.newEClass(s);");
+    _builder.append("return EdeltaLibrary.newEClass(s);");
     _builder.newLine();
     _builder.append("  ");
     _builder.append("}");
@@ -340,6 +342,8 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.newLine();
     _builder.newLine();
     _builder.append("import edelta.lib.AbstractEdelta;");
+    _builder.newLine();
+    _builder.append("import edelta.lib.EdeltaLibrary;");
     _builder.newLine();
     _builder.append("import java.util.function.Consumer;");
     _builder.newLine();
@@ -383,7 +387,7 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.append("EList<EClass> _eSuperTypes = it.getESuperTypes();");
     _builder.newLine();
     _builder.append("      ");
-    _builder.append("EClass _newEClass = this.lib.newEClass(\"Base\");");
+    _builder.append("EClass _newEClass = EdeltaLibrary.newEClass(\"Base\");");
     _builder.newLine();
     _builder.append("      ");
     _builder.append("_eSuperTypes.add(_newEClass);");
@@ -392,7 +396,7 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.append("};");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("return this.lib.newEClass(s, _function);");
+    _builder.append("return EdeltaLibrary.newEClass(s, _function);");
     _builder.newLine();
     _builder.append("  ");
     _builder.append("}");
@@ -668,6 +672,8 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.newLine();
     _builder.append("import edelta.lib.AbstractEdelta;");
     _builder.newLine();
+    _builder.append("import edelta.lib.EdeltaLibrary;");
+    _builder.newLine();
     _builder.append("import org.eclipse.emf.ecore.EPackage;");
     _builder.newLine();
     _builder.newLine();
@@ -700,7 +706,7 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.append("public void aTest(final EPackage it) {");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("this.lib.addNewEClass(it, \"NewClass\");");
+    _builder.append("EdeltaLibrary.addNewEClass(it, \"NewClass\");");
     _builder.newLine();
     _builder.append("  ");
     _builder.append("}");
@@ -761,6 +767,8 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.newLine();
     _builder.append("import edelta.lib.AbstractEdelta;");
     _builder.newLine();
+    _builder.append("import edelta.lib.EdeltaLibrary;");
+    _builder.newLine();
     _builder.append("import org.eclipse.emf.ecore.EPackage;");
     _builder.newLine();
     _builder.newLine();
@@ -793,7 +801,7 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.append("public void creation(final EPackage it) {");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("this.lib.addNewEClass(it, \"NewClass\");");
+    _builder.append("EdeltaLibrary.addNewEClass(it, \"NewClass\");");
     _builder.newLine();
     _builder.append("  ");
     _builder.append("}");
@@ -1293,6 +1301,8 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder_1.newLine();
     _builder_1.append("import edelta.lib.AbstractEdelta;");
     _builder_1.newLine();
+    _builder_1.append("import edelta.lib.EdeltaLibrary;");
+    _builder_1.newLine();
     _builder_1.append("import java.util.function.Consumer;");
     _builder_1.newLine();
     _builder_1.append("import org.eclipse.emf.common.util.EList;");
@@ -1342,7 +1352,7 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder_1.append("EList<EClass> _eSuperTypes = it_1.getESuperTypes();");
     _builder_1.newLine();
     _builder_1.append("      ");
-    _builder_1.append("EClass _newEClass = this.lib.newEClass(\"Base\");");
+    _builder_1.append("EClass _newEClass = EdeltaLibrary.newEClass(\"Base\");");
     _builder_1.newLine();
     _builder_1.append("      ");
     _builder_1.append("_eSuperTypes.add(_newEClass);");
@@ -1351,7 +1361,7 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder_1.append("};");
     _builder_1.newLine();
     _builder_1.append("    ");
-    _builder_1.append("EClass _newEClass = this.lib.newEClass(\"ANewClass\", _function);");
+    _builder_1.append("EClass _newEClass = EdeltaLibrary.newEClass(\"ANewClass\", _function);");
     _builder_1.newLine();
     _builder_1.append("    ");
     _builder_1.append("_eClassifiers.add(_newEClass);");
@@ -1423,6 +1433,8 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder_1.newLine();
     _builder_1.append("import edelta.lib.AbstractEdelta;");
     _builder_1.newLine();
+    _builder_1.append("import edelta.lib.EdeltaLibrary;");
+    _builder_1.newLine();
     _builder_1.append("import org.eclipse.emf.common.util.EList;");
     _builder_1.newLine();
     _builder_1.append("import org.eclipse.emf.ecore.EAttribute;");
@@ -1473,7 +1485,7 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder_1.append("EList<EStructuralFeature> _eStructuralFeatures = getEClass(\"foo\", \"RenamedClass\").getEStructuralFeatures();");
     _builder_1.newLine();
     _builder_1.append("    ");
-    _builder_1.append("EAttribute _newEAttribute = this.lib.newEAttribute(\"anotherAttr\", getEDataType(\"foo\", \"FooDataType\"));");
+    _builder_1.append("EAttribute _newEAttribute = EdeltaLibrary.newEAttribute(\"anotherAttr\", getEDataType(\"foo\", \"FooDataType\"));");
     _builder_1.newLine();
     _builder_1.append("    ");
     _builder_1.append("_eStructuralFeatures.add(_newEAttribute);");
@@ -1592,6 +1604,8 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.newLine();
     _builder.append("import edelta.lib.AbstractEdelta;");
     _builder.newLine();
+    _builder.append("import edelta.lib.EdeltaLibrary;");
+    _builder.newLine();
     _builder.append("import java.util.function.Consumer;");
     _builder.newLine();
     _builder.append("import org.eclipse.emf.ecore.EClass;");
@@ -1631,13 +1645,13 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.append("final Consumer<EClass> _function = (EClass it_1) -> {");
     _builder.newLine();
     _builder.append("      ");
-    _builder.append("this.lib.addEAttribute(it_1, getEAttribute(\"foo\", \"FooClass\", \"myAttribute\"));");
+    _builder.append("EdeltaLibrary.addEAttribute(it_1, getEAttribute(\"foo\", \"FooClass\", \"myAttribute\"));");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("};");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("this.lib.addNewEClass(it, \"NewClass\", _function);");
+    _builder.append("EdeltaLibrary.addNewEClass(it, \"NewClass\", _function);");
     _builder.newLine();
     _builder.append("  ");
     _builder.append("}");
@@ -1770,6 +1784,8 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.newLine();
     _builder.append("import edelta.lib.AbstractEdelta;");
     _builder.newLine();
+    _builder.append("import edelta.lib.EdeltaLibrary;");
+    _builder.newLine();
     _builder.append("import java.util.function.Consumer;");
     _builder.newLine();
     _builder.append("import org.eclipse.emf.ecore.EAttribute;");
@@ -1826,7 +1842,7 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.append("};");
     _builder.newLine();
     _builder.append("      ");
-    _builder.append("this.lib.addNewEAttribute(it_1, \"ANewAttribute\", getEDataType(\"foo\", \"FooDataType\"), _function_1);");
+    _builder.append("EdeltaLibrary.addNewEAttribute(it_1, \"ANewAttribute\", getEDataType(\"foo\", \"FooDataType\"), _function_1);");
     _builder.newLine();
     _builder.append("      ");
     _builder.append("final Consumer<EReference> _function_2 = (EReference it_2) -> {");
@@ -1838,13 +1854,13 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.append("};");
     _builder.newLine();
     _builder.append("      ");
-    _builder.append("this.lib.addNewEReference(it_1, \"ANewReference\", getEClass(\"foo\", \"FooClass\"), _function_2);");
+    _builder.append("EdeltaLibrary.addNewEReference(it_1, \"ANewReference\", getEClass(\"foo\", \"FooClass\"), _function_2);");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("};");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("this.lib.addNewEClass(it, \"ANewClass\", _function);");
+    _builder.append("EdeltaLibrary.addNewEClass(it, \"ANewClass\", _function);");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("final Consumer<EEnum> _function_1 = (EEnum it_1) -> {");
@@ -1859,16 +1875,16 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.append("};");
     _builder.newLine();
     _builder.append("      ");
-    _builder.append("this.lib.addNewEEnumLiteral(it_1, \"ANewEnumLiteral\", _function_2);");
+    _builder.append("EdeltaLibrary.addNewEEnumLiteral(it_1, \"ANewEnumLiteral\", _function_2);");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("};");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("this.lib.addNewEEnum(it, \"ANewEnum\", _function_1);");
+    _builder.append("EdeltaLibrary.addNewEEnum(it, \"ANewEnum\", _function_1);");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("this.lib.addNewEDataType(it, \"ANewDataType\", \"java.lang.String\");");
+    _builder.append("EdeltaLibrary.addNewEDataType(it, \"ANewDataType\", \"java.lang.String\");");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("getEClass(\"foo\", \"ANewClass\");");
@@ -2078,6 +2094,8 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder_1.newLine();
     _builder_1.append("import edelta.lib.AbstractEdelta;");
     _builder_1.newLine();
+    _builder_1.append("import edelta.lib.EdeltaLibrary;");
+    _builder_1.newLine();
     _builder_1.append("import java.util.function.Consumer;");
     _builder_1.newLine();
     _builder_1.append("import org.eclipse.emf.common.util.EList;");
@@ -2128,19 +2146,19 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder_1.append("final Consumer<EPackage> _function_1 = (EPackage it_2) -> {");
     _builder_1.newLine();
     _builder_1.append("        ");
-    _builder_1.append("this.lib.addNewEClass(it_2, \"ANestedSubPackageClass\");");
+    _builder_1.append("EdeltaLibrary.addNewEClass(it_2, \"ANestedSubPackageClass\");");
     _builder_1.newLine();
     _builder_1.append("      ");
     _builder_1.append("};");
     _builder_1.newLine();
     _builder_1.append("      ");
-    _builder_1.append("this.lib.addNewESubpackage(it_1, \"anestedsubpackage\", \"aprefix2\", \"aURI2\", _function_1);");
+    _builder_1.append("EdeltaLibrary.addNewESubpackage(it_1, \"anestedsubpackage\", \"aprefix2\", \"aURI2\", _function_1);");
     _builder_1.newLine();
     _builder_1.append("    ");
     _builder_1.append("};");
     _builder_1.newLine();
     _builder_1.append("    ");
-    _builder_1.append("this.lib.addNewESubpackage(it, \"anewsubpackage\", \"aprefix\", \"aURI\", _function);");
+    _builder_1.append("EdeltaLibrary.addNewESubpackage(it, \"anewsubpackage\", \"aprefix\", \"aURI\", _function);");
     _builder_1.newLine();
     _builder_1.append("    ");
     _builder_1.append("final Consumer<EClass> _function_1 = (EClass it_1) -> {");
@@ -2149,7 +2167,7 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder_1.append("EList<EStructuralFeature> _eStructuralFeatures = it_1.getEStructuralFeatures();");
     _builder_1.newLine();
     _builder_1.append("      ");
-    _builder_1.append("EReference _newEReference = this.lib.newEReference(\"newTestRef\", getEClass(\"foo.anewsubpackage.anestedsubpackage\", \"ANestedSubPackageClass\"));");
+    _builder_1.append("EReference _newEReference = EdeltaLibrary.newEReference(\"newTestRef\", getEClass(\"foo.anewsubpackage.anestedsubpackage\", \"ANestedSubPackageClass\"));");
     _builder_1.newLine();
     _builder_1.append("      ");
     _builder_1.append("_eStructuralFeatures.add(_newEReference);");
@@ -2158,7 +2176,7 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder_1.append("};");
     _builder_1.newLine();
     _builder_1.append("    ");
-    _builder_1.append("this.lib.addNewEClass(getEPackage(\"foo.anewsubpackage\"), \"NewClass\", _function_1);");
+    _builder_1.append("EdeltaLibrary.addNewEClass(getEPackage(\"foo.anewsubpackage\"), \"NewClass\", _function_1);");
     _builder_1.newLine();
     _builder_1.append("    ");
     _builder_1.append("getEClass(\"foo.anewsubpackage\", \"NewClass\").setName(\"RenamedClass\");");
@@ -2167,7 +2185,7 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder_1.append("EList<EStructuralFeature> _eStructuralFeatures = getEClass(\"foo.anewsubpackage\", \"RenamedClass\").getEStructuralFeatures();");
     _builder_1.newLine();
     _builder_1.append("    ");
-    _builder_1.append("EAttribute _newEAttribute = this.lib.newEAttribute(\"added\", getEDataType(\"foo\", \"FooDataType\"));");
+    _builder_1.append("EAttribute _newEAttribute = EdeltaLibrary.newEAttribute(\"added\", getEDataType(\"foo\", \"FooDataType\"));");
     _builder_1.newLine();
     _builder_1.append("    ");
     _builder_1.append("_eStructuralFeatures.add(_newEAttribute);");
@@ -2670,6 +2688,253 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
   }
   
   @Test
+  public void testExecutionOfModificationsOfMetamodelsAcrossSeveralFilesIntroducingDepOnAnotherMetamodel() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("import org.eclipse.emf.ecore.EClass");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("package test1");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("metamodel \"simple\"");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("def setBaseClass(EClass c) : void {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("c.getESuperTypes += ecoreref(SimpleClass)");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append("import org.eclipse.emf.ecore.EClass");
+    _builder_1.newLine();
+    _builder_1.append("import test1.MyFile0");
+    _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("package test2");
+    _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("metamodel \"anothersimple\"");
+    _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("use test1.MyFile0 as extension my");
+    _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("modifyEcore aModificationTest epackage anothersimple {");
+    _builder_1.newLine();
+    _builder_1.append("\t");
+    _builder_1.append("// the other file\'s operation will set the");
+    _builder_1.newLine();
+    _builder_1.append("\t");
+    _builder_1.append("// base class of this package class to another package class");
+    _builder_1.newLine();
+    _builder_1.append("\t");
+    _builder_1.append("ecoreref(AnotherSimpleClass).setBaseClass");
+    _builder_1.newLine();
+    _builder_1.append("\t");
+    _builder_1.append("// now anothersimple refers to simple");
+    _builder_1.newLine();
+    _builder_1.append("\t");
+    _builder_1.append("// now modify the abstract property of the");
+    _builder_1.newLine();
+    _builder_1.append("\t");
+    _builder_1.append("// superclass in the other package");
+    _builder_1.newLine();
+    _builder_1.append("\t");
+    _builder_1.append("ecoreref(AnotherSimpleClass).ESuperTypes.head.abstract = true");
+    _builder_1.newLine();
+    _builder_1.append("}");
+    _builder_1.newLine();
+    StringConcatenation _builder_2 = new StringConcatenation();
+    _builder_2.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+    _builder_2.newLine();
+    _builder_2.append("<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
+    _builder_2.newLine();
+    _builder_2.append("    ");
+    _builder_2.append("xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"simple\" nsURI=\"http://www.simple\" nsPrefix=\"simple\">");
+    _builder_2.newLine();
+    _builder_2.append("  ");
+    _builder_2.append("<eClassifiers xsi:type=\"ecore:EClass\" name=\"SimpleClass\" abstract=\"true\"/>");
+    _builder_2.newLine();
+    _builder_2.append("</ecore:EPackage>");
+    _builder_2.newLine();
+    Pair<CharSequence, CharSequence> _mappedTo = Pair.<CharSequence, CharSequence>of(EdeltaAbstractTest.SIMPLE_ECORE, _builder_2.toString());
+    StringConcatenation _builder_3 = new StringConcatenation();
+    _builder_3.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+    _builder_3.newLine();
+    _builder_3.append("<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
+    _builder_3.newLine();
+    _builder_3.append("    ");
+    _builder_3.append("xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"anothersimple\" nsURI=\"http://www.anothersimple\" nsPrefix=\"anothersimple\">");
+    _builder_3.newLine();
+    _builder_3.append("  ");
+    _builder_3.append("<eClassifiers xsi:type=\"ecore:EClass\" name=\"AnotherSimpleClass\" eSuperTypes=\"Simple.ecore#//SimpleClass\"/>");
+    _builder_3.newLine();
+    _builder_3.append("</ecore:EPackage>");
+    _builder_3.newLine();
+    Pair<CharSequence, CharSequence> _mappedTo_1 = Pair.<CharSequence, CharSequence>of(EdeltaAbstractTest.ANOTHER_SIMPLE_ECORE, _builder_3.toString());
+    this.checkCompiledCodeExecutionWithSeveralFiles(
+      Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(EdeltaAbstractTest.SIMPLE_ECORE, EdeltaAbstractTest.ANOTHER_SIMPLE_ECORE)), 
+      Collections.<CharSequence>unmodifiableList(CollectionLiterals.<CharSequence>newArrayList(_builder, _builder_1)), 
+      "test2.MyFile1", 
+      Collections.<Pair<CharSequence, CharSequence>>unmodifiableList(CollectionLiterals.<Pair<CharSequence, CharSequence>>newArrayList(_mappedTo, _mappedTo_1)), 
+      true);
+  }
+  
+  @Test
+  public void testExecutionOfModificationsOfMetamodelsAcrossSeveralFilesIntroducingMutualDepOnAnotherMetamodel() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("import org.eclipse.emf.ecore.EClass");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("package test1");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("metamodel \"simple\"");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("def setBaseClass(EClass c) : void {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("c.getESuperTypes += ecoreref(SimpleClass)");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append("import org.eclipse.emf.ecore.EClass");
+    _builder_1.newLine();
+    _builder_1.append("import test1.MyFile0");
+    _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("package test2");
+    _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("metamodel \"anothersimple\"");
+    _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("use test1.MyFile0 as extension my");
+    _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("modifyEcore aModificationTest epackage anothersimple {");
+    _builder_1.newLine();
+    _builder_1.append("\t");
+    _builder_1.append("// the other file\'s operation will set the");
+    _builder_1.newLine();
+    _builder_1.append("\t");
+    _builder_1.append("// base class of this package class to another package class");
+    _builder_1.newLine();
+    _builder_1.append("\t");
+    _builder_1.append("ecoreref(AnotherSimpleClass).setBaseClass");
+    _builder_1.newLine();
+    _builder_1.append("\t");
+    _builder_1.append("// now anothersimple refers to simple (created dependency)");
+    _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("\t");
+    _builder_1.append("val referenceToSuperClass = ecoreref(AnotherSimpleClass).ESuperTypes.head");
+    _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("\t");
+    _builder_1.append("// also add a reference to the other epackage");
+    _builder_1.newLine();
+    _builder_1.append("\t");
+    _builder_1.append("ecoreref(AnotherSimpleClass)");
+    _builder_1.newLine();
+    _builder_1.append("\t\t");
+    _builder_1.append(".addNewEReference(");
+    _builder_1.newLine();
+    _builder_1.append("\t\t\t");
+    _builder_1.append("\"aReferenceToSimpleClass\",");
+    _builder_1.newLine();
+    _builder_1.append("\t\t\t");
+    _builder_1.append("referenceToSuperClass");
+    _builder_1.newLine();
+    _builder_1.append("\t\t");
+    _builder_1.append(")");
+    _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("\t");
+    _builder_1.append("// now modify the superclass in the other package");
+    _builder_1.newLine();
+    _builder_1.append("\t");
+    _builder_1.append("// introducing a mutual dependency");
+    _builder_1.newLine();
+    _builder_1.append("\t");
+    _builder_1.append("referenceToSuperClass");
+    _builder_1.newLine();
+    _builder_1.append("\t\t");
+    _builder_1.append(".addNewEReference(\"aReferenceToAnotherSimpleClass\", ecoreref(AnotherSimpleClass)) [");
+    _builder_1.newLine();
+    _builder_1.append("\t\t\t");
+    _builder_1.append("// also make the references bidirectional");
+    _builder_1.newLine();
+    _builder_1.append("\t\t\t");
+    _builder_1.append("EOpposite = ecoreref(aReferenceToSimpleClass)");
+    _builder_1.newLine();
+    _builder_1.append("\t\t\t");
+    _builder_1.append("ecoreref(aReferenceToSimpleClass).EOpposite = it");
+    _builder_1.newLine();
+    _builder_1.append("\t\t");
+    _builder_1.append("]");
+    _builder_1.newLine();
+    _builder_1.append("}");
+    _builder_1.newLine();
+    StringConcatenation _builder_2 = new StringConcatenation();
+    _builder_2.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+    _builder_2.newLine();
+    _builder_2.append("<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
+    _builder_2.newLine();
+    _builder_2.append("    ");
+    _builder_2.append("xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"simple\" nsURI=\"http://www.simple\" nsPrefix=\"simple\">");
+    _builder_2.newLine();
+    _builder_2.append("  ");
+    _builder_2.append("<eClassifiers xsi:type=\"ecore:EClass\" name=\"SimpleClass\">");
+    _builder_2.newLine();
+    _builder_2.append("    ");
+    _builder_2.append("<eStructuralFeatures xsi:type=\"ecore:EReference\" name=\"aReferenceToAnotherSimpleClass\"");
+    _builder_2.newLine();
+    _builder_2.append("        ");
+    _builder_2.append("eType=\"ecore:EClass AnotherSimple.ecore#//AnotherSimpleClass\" eOpposite=\"AnotherSimple.ecore#//AnotherSimpleClass/aReferenceToSimpleClass\"/>");
+    _builder_2.newLine();
+    _builder_2.append("  ");
+    _builder_2.append("</eClassifiers>");
+    _builder_2.newLine();
+    _builder_2.append("</ecore:EPackage>");
+    _builder_2.newLine();
+    Pair<CharSequence, CharSequence> _mappedTo = Pair.<CharSequence, CharSequence>of(EdeltaAbstractTest.SIMPLE_ECORE, _builder_2.toString());
+    StringConcatenation _builder_3 = new StringConcatenation();
+    _builder_3.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+    _builder_3.newLine();
+    _builder_3.append("<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
+    _builder_3.newLine();
+    _builder_3.append("    ");
+    _builder_3.append("xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"anothersimple\" nsURI=\"http://www.anothersimple\" nsPrefix=\"anothersimple\">");
+    _builder_3.newLine();
+    _builder_3.append("  ");
+    _builder_3.append("<eClassifiers xsi:type=\"ecore:EClass\" name=\"AnotherSimpleClass\" eSuperTypes=\"Simple.ecore#//SimpleClass\">");
+    _builder_3.newLine();
+    _builder_3.append("    ");
+    _builder_3.append("<eStructuralFeatures xsi:type=\"ecore:EReference\" name=\"aReferenceToSimpleClass\"");
+    _builder_3.newLine();
+    _builder_3.append("        ");
+    _builder_3.append("eType=\"ecore:EClass Simple.ecore#//SimpleClass\" eOpposite=\"Simple.ecore#//SimpleClass/aReferenceToAnotherSimpleClass\"/>");
+    _builder_3.newLine();
+    _builder_3.append("  ");
+    _builder_3.append("</eClassifiers>");
+    _builder_3.newLine();
+    _builder_3.append("</ecore:EPackage>");
+    _builder_3.newLine();
+    Pair<CharSequence, CharSequence> _mappedTo_1 = Pair.<CharSequence, CharSequence>of(EdeltaAbstractTest.ANOTHER_SIMPLE_ECORE, _builder_3.toString());
+    this.checkCompiledCodeExecutionWithSeveralFiles(
+      Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(EdeltaAbstractTest.SIMPLE_ECORE, EdeltaAbstractTest.ANOTHER_SIMPLE_ECORE)), 
+      Collections.<CharSequence>unmodifiableList(CollectionLiterals.<CharSequence>newArrayList(_builder, _builder_1)), 
+      "test2.MyFile1", 
+      Collections.<Pair<CharSequence, CharSequence>>unmodifiableList(CollectionLiterals.<Pair<CharSequence, CharSequence>>newArrayList(_mappedTo, _mappedTo_1)), 
+      true);
+  }
+  
+  @Test
   public void testExecutionOfComplexOperationsWithSubPackages() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("metamodel \"foo\"");
@@ -2948,6 +3213,303 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
   }
   
   @Test
+  public void testCompilationOfNonAmbiguousEcorerefAfterRemoval() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("import org.eclipse.emf.ecore.EAttribute");
+    _builder.newLine();
+    _builder.append("import org.eclipse.emf.ecore.EReference");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("metamodel \"mainpackage\"");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("modifyEcore aTest epackage mainpackage {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("addNewEClass(\"ANewClass\") [");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("addNewEAttribute(\"created\", null)");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("]");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("addNewEClass(\"AnotherNewClass\") [");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("addNewEReference(\"created\", null)");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("]");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("EClassifiers -= ecoreref(ANewClass)");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("// \"created\" is not ambiguous anymore");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("// and it\'s correctly typed (EReference, not EAttribute)");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("val EReference r = ecoreref(created) // OK");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    final ResourceSet rs = this.createResourceSet(_builder);
+    this.addEPackageWithSubPackageForTests(rs);
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append("package edelta;");
+    _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("import edelta.lib.AbstractEdelta;");
+    _builder_1.newLine();
+    _builder_1.append("import edelta.lib.EdeltaLibrary;");
+    _builder_1.newLine();
+    _builder_1.append("import java.util.function.Consumer;");
+    _builder_1.newLine();
+    _builder_1.append("import org.eclipse.emf.common.util.EList;");
+    _builder_1.newLine();
+    _builder_1.append("import org.eclipse.emf.ecore.EClass;");
+    _builder_1.newLine();
+    _builder_1.append("import org.eclipse.emf.ecore.EClassifier;");
+    _builder_1.newLine();
+    _builder_1.append("import org.eclipse.emf.ecore.EPackage;");
+    _builder_1.newLine();
+    _builder_1.append("import org.eclipse.emf.ecore.EReference;");
+    _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("@SuppressWarnings(\"all\")");
+    _builder_1.newLine();
+    _builder_1.append("public class MyFile0 extends AbstractEdelta {");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("public MyFile0() {");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("}");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("public MyFile0(final AbstractEdelta other) {");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("super(other);");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("}");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("public void aTest(final EPackage it) {");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("final Consumer<EClass> _function = (EClass it_1) -> {");
+    _builder_1.newLine();
+    _builder_1.append("      ");
+    _builder_1.append("EdeltaLibrary.addNewEAttribute(it_1, \"created\", null);");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("};");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("EdeltaLibrary.addNewEClass(it, \"ANewClass\", _function);");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("final Consumer<EClass> _function_1 = (EClass it_1) -> {");
+    _builder_1.newLine();
+    _builder_1.append("      ");
+    _builder_1.append("EdeltaLibrary.addNewEReference(it_1, \"created\", null);");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("};");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("EdeltaLibrary.addNewEClass(it, \"AnotherNewClass\", _function_1);");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("EList<EClassifier> _eClassifiers = it.getEClassifiers();");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("_eClassifiers.remove(getEClass(\"mainpackage\", \"ANewClass\"));");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("final EReference r = getEReference(\"mainpackage\", \"AnotherNewClass\", \"created\");");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("}");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("@Override");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("public void performSanityChecks() throws Exception {");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("ensureEPackageIsLoaded(\"mainpackage\");");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("}");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("@Override");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("protected void doExecute() throws Exception {");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("aTest(getEPackage(\"mainpackage\"));");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("}");
+    _builder_1.newLine();
+    _builder_1.append("}");
+    _builder_1.newLine();
+    this.checkCompilation(rs, _builder_1, 
+      true);
+  }
+  
+  @Test
+  public void testEcoreRefExpForCreatedEClassInInitializer() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("import org.eclipse.emf.ecore.EcoreFactory");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("metamodel \"foo\"");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("modifyEcore aTest epackage foo {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("addNewEClass(\"NewClass\") [");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("// even though the name is set after the initializer");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("// is executed we can still refer the newly created EClass");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("ecoreref(NewClass).abstract = true");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("ecoreref(NewClass).name = \"Renamed\"");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("]");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ecoreref(Renamed)");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append("package edelta;");
+    _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("import edelta.lib.AbstractEdelta;");
+    _builder_1.newLine();
+    _builder_1.append("import edelta.lib.EdeltaLibrary;");
+    _builder_1.newLine();
+    _builder_1.append("import java.util.function.Consumer;");
+    _builder_1.newLine();
+    _builder_1.append("import org.eclipse.emf.ecore.EClass;");
+    _builder_1.newLine();
+    _builder_1.append("import org.eclipse.emf.ecore.EPackage;");
+    _builder_1.newLine();
+    _builder_1.newLine();
+    _builder_1.append("@SuppressWarnings(\"all\")");
+    _builder_1.newLine();
+    _builder_1.append("public class MyFile0 extends AbstractEdelta {");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("public MyFile0() {");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("}");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("public MyFile0(final AbstractEdelta other) {");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("super(other);");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("}");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("public void aTest(final EPackage it) {");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("final Consumer<EClass> _function = (EClass it_1) -> {");
+    _builder_1.newLine();
+    _builder_1.append("      ");
+    _builder_1.append("getEClass(\"foo\", \"NewClass\").setAbstract(true);");
+    _builder_1.newLine();
+    _builder_1.append("      ");
+    _builder_1.append("getEClass(\"foo\", \"NewClass\").setName(\"Renamed\");");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("};");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("EdeltaLibrary.addNewEClass(it, \"NewClass\", _function);");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("getEClass(\"foo\", \"Renamed\");");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("}");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("@Override");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("public void performSanityChecks() throws Exception {");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("ensureEPackageIsLoaded(\"foo\");");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("}");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("@Override");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("protected void doExecute() throws Exception {");
+    _builder_1.newLine();
+    _builder_1.append("    ");
+    _builder_1.append("aTest(getEPackage(\"foo\"));");
+    _builder_1.newLine();
+    _builder_1.append("  ");
+    _builder_1.append("}");
+    _builder_1.newLine();
+    _builder_1.append("}");
+    _builder_1.newLine();
+    this.checkCompilation(_builder, _builder_1);
+  }
+  
+  @Test
   public void testCompilationOfPersonListExampleModifyEcore() {
     final ResourceSet rs = this.createResourceSetWithEcores(
       Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(EdeltaAbstractTest.PERSON_LIST_ECORE)), 
@@ -2957,6 +3519,8 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.newLine();
     _builder.newLine();
     _builder.append("import edelta.lib.AbstractEdelta;");
+    _builder.newLine();
+    _builder.append("import edelta.lib.EdeltaLibrary;");
     _builder.newLine();
     _builder.append("import edelta.refactorings.lib.EdeltaRefactorings;");
     _builder.newLine();
@@ -3031,7 +3595,7 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.append("getEEnum(\"PersonList\", \"Gender\"));");
     _builder.newLine();
     _builder.append("      ");
-    _builder.append("this.lib.addEAttribute(it_1, ");
+    _builder.append("EdeltaLibrary.addEAttribute(it_1, ");
     _builder.newLine();
     _builder.append("        ");
     _builder.append("this.refactorings.mergeAttributes(\"name\", ");
@@ -3072,7 +3636,7 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.append("};");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("this.lib.addNewEClass(it, \"Place\", _function);");
+    _builder.append("EdeltaLibrary.addNewEClass(it, \"Place\", _function);");
     _builder.newLine();
     _builder.append("  ");
     _builder.append("}");
@@ -3086,7 +3650,7 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.append("final Consumer<EClass> _function = (EClass it_1) -> {");
     _builder.newLine();
     _builder.append("      ");
-    _builder.append("this.lib.addNewEAttribute(it_1, \"description\", getEDataType(\"ecore\", \"EString\"));");
+    _builder.append("EdeltaLibrary.addNewEAttribute(it_1, \"description\", getEDataType(\"ecore\", \"EString\"));");
     _builder.newLine();
     _builder.append("      ");
     _builder.append("this.refactorings.extractMetaClass(it_1, getEReference(\"PersonList\", \"Person\", \"works\"), \"position\", \"works\");");
@@ -3095,7 +3659,7 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.append("};");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("this.lib.addNewEClass(it, \"WorkingPosition\", _function);");
+    _builder.append("EdeltaLibrary.addNewEClass(it, \"WorkingPosition\", _function);");
     _builder.newLine();
     _builder.append("  ");
     _builder.append("}");
@@ -3106,7 +3670,7 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     _builder.append("public void improveList(final EPackage it) {");
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("this.lib.addEReference(getEClass(\"PersonList\", \"List\"), ");
+    _builder.append("EdeltaLibrary.addEReference(getEClass(\"PersonList\", \"List\"), ");
     _builder.newLine();
     _builder.append("      ");
     _builder.append("this.refactorings.mergeReferences(\"places\", ");
@@ -3226,23 +3790,27 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
   
   private ResourceSet createResourceSet(final CharSequence... inputs) {
     try {
-      ArrayList<Pair<String, ? extends CharSequence>> _newArrayList = CollectionLiterals.<Pair<String, ? extends CharSequence>>newArrayList();
-      final Procedure1<ArrayList<Pair<String, ? extends CharSequence>>> _function = (ArrayList<Pair<String, ? extends CharSequence>> list) -> {
-        final Procedure2<CharSequence, Integer> _function_1 = (CharSequence e, Integer i) -> {
-          String _primaryFileExtension = this.extensionProvider.getPrimaryFileExtension();
-          String _plus = ((("MyFile" + i) + ".") + _primaryFileExtension);
-          Pair<String, CharSequence> _mappedTo = Pair.<String, CharSequence>of(_plus, e);
-          list.add(_mappedTo);
-        };
-        IterableExtensions.<CharSequence>forEach(((Iterable<CharSequence>)Conversions.doWrapArray(inputs)), _function_1);
-      };
-      final ArrayList<Pair<String, ? extends CharSequence>> pairs = ObjectExtensions.<ArrayList<Pair<String, ? extends CharSequence>>>operator_doubleArrow(_newArrayList, _function);
+      final ArrayList<Pair<String, CharSequence>> pairs = this.createInputPairs(inputs);
       final ResourceSet rs = this.compilationTestHelper.resourceSet(((Pair<String, ? extends CharSequence>[])Conversions.unwrapArray(pairs, Pair.class)));
       this.addEPackageForTests(rs);
       return rs;
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
+  }
+  
+  private ArrayList<Pair<String, CharSequence>> createInputPairs(final CharSequence[] inputs) {
+    ArrayList<Pair<String, CharSequence>> _newArrayList = CollectionLiterals.<Pair<String, CharSequence>>newArrayList();
+    final Procedure1<ArrayList<Pair<String, CharSequence>>> _function = (ArrayList<Pair<String, CharSequence>> list) -> {
+      final Procedure2<CharSequence, Integer> _function_1 = (CharSequence e, Integer i) -> {
+        String _primaryFileExtension = this.extensionProvider.getPrimaryFileExtension();
+        String _plus = ((("MyFile" + i) + ".") + _primaryFileExtension);
+        Pair<String, CharSequence> _mappedTo = Pair.<String, CharSequence>of(_plus, e);
+        list.add(_mappedTo);
+      };
+      IterableExtensions.<CharSequence>forEach(((Iterable<CharSequence>)Conversions.doWrapArray(inputs)), _function_1);
+    };
+    return ObjectExtensions.<ArrayList<Pair<String, CharSequence>>>operator_doubleArrow(_newArrayList, _function);
   }
   
   private ResourceSet createResourceSetWithEcores(final List<String> ecoreNames, final CharSequence input) {
@@ -3264,6 +3832,30 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
       List<Pair<String, String>> _map = ListExtensions.<String, Pair<String, String>>map(ecoreNames, _function);
       Iterables.<Pair<String, ? extends CharSequence>>addAll(pairs, _map);
       final ResourceSet rs = this.compilationTestHelper.resourceSet(((Pair<String, ? extends CharSequence>[])Conversions.unwrapArray(pairs, Pair.class)));
+      return rs;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  private ResourceSet createResourceSetWithEcoresAndSeveralInputs(final List<String> ecoreNames, final List<CharSequence> inputs) {
+    try {
+      String _loadFile = EdeltaTestUtils.loadFile((EdeltaAbstractTest.METAMODEL_PATH + EdeltaAbstractTest.ECORE_ECORE));
+      Pair<String, String> _mappedTo = Pair.<String, String>of(EdeltaAbstractTest.ECORE_ECORE, _loadFile);
+      final ArrayList<Pair<String, String>> ecorePairs = CollectionLiterals.<Pair<String, String>>newArrayList(_mappedTo);
+      final Function1<String, Pair<String, String>> _function = (String ecoreName) -> {
+        try {
+          String _loadFile_1 = EdeltaTestUtils.loadFile((EdeltaAbstractTest.METAMODEL_PATH + ecoreName));
+          return Pair.<String, String>of(ecoreName, _loadFile_1);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      List<Pair<String, String>> _map = ListExtensions.<String, Pair<String, String>>map(ecoreNames, _function);
+      Iterables.<Pair<String, String>>addAll(ecorePairs, _map);
+      final ArrayList<Pair<String, CharSequence>> inputPairs = this.createInputPairs(((CharSequence[])Conversions.unwrapArray(inputs, CharSequence.class)));
+      Iterable<Pair<String, ? extends CharSequence>> _plus = Iterables.<Pair<String, ? extends CharSequence>>concat(ecorePairs, inputPairs);
+      final ResourceSet rs = this.compilationTestHelper.resourceSet(((Pair<String, ? extends CharSequence>[])Conversions.unwrapArray(_plus, Pair.class)));
       return rs;
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
@@ -3298,31 +3890,51 @@ public class EdeltaCompilerTest extends EdeltaAbstractTest {
     this.wipeModifiedDirectoryContents();
     final ResourceSet rs = this.createResourceSetWithEcores(ecoreNames, input);
     final IAcceptor<CompilationTestHelper.Result> _function = (CompilationTestHelper.Result it) -> {
-      try {
-        if (checkValidationErrors) {
-          this.assertNoValidationErrors(it);
-        }
-        if (checkValidationErrors) {
-          this.assertGeneratedJavaCodeCompiles(it);
-        }
-        final Class<?> genClass = it.getCompiledClass();
-        final Object edeltaObj = genClass.getDeclaredConstructor().newInstance();
-        for (final String ecoreName : ecoreNames) {
-          this._reflectExtensions.invoke(edeltaObj, "loadEcoreFile", new Object[] { (EdeltaAbstractTest.METAMODEL_PATH + ecoreName) });
-        }
-        this._reflectExtensions.invoke(edeltaObj, "execute");
-        this._reflectExtensions.invoke(edeltaObj, "saveModifiedEcores", new Object[] { EdeltaCompilerTest.MODIFIED });
-        for (final Pair<CharSequence, CharSequence> expected : expectedModifiedEcores) {
-          CharSequence _key = expected.getKey();
-          String _plus = ((EdeltaCompilerTest.MODIFIED + "/") + _key);
-          EdeltaTestUtils.compareSingleFileContents(_plus, 
-            expected.getValue().toString());
-        }
-      } catch (Throwable _e) {
-        throw Exceptions.sneakyThrow(_e);
+      if (checkValidationErrors) {
+        this.assertNoValidationErrors(it);
       }
+      if (checkValidationErrors) {
+        this.assertGeneratedJavaCodeCompiles(it);
+      }
+      final Class<?> genClass = it.getCompiledClass();
+      this.checkExecutionAndAssertExpectedModifiedEcores(genClass, ecoreNames, expectedModifiedEcores);
     };
     this.compilationTestHelper.compile(rs, _function);
+  }
+  
+  private void checkCompiledCodeExecutionWithSeveralFiles(final List<String> ecoreNames, final List<CharSequence> inputs, final String classToExecute, final List<Pair<CharSequence, CharSequence>> expectedModifiedEcores, final boolean checkValidationErrors) {
+    this.wipeModifiedDirectoryContents();
+    final ResourceSet rs = this.createResourceSetWithEcoresAndSeveralInputs(ecoreNames, inputs);
+    final IAcceptor<CompilationTestHelper.Result> _function = (CompilationTestHelper.Result it) -> {
+      if (checkValidationErrors) {
+        this.assertNoValidationErrors(it);
+      }
+      if (checkValidationErrors) {
+        this.assertGeneratedJavaCodeCompiles(it);
+      }
+      final Class<?> genClass = it.getCompiledClass(classToExecute);
+      this.checkExecutionAndAssertExpectedModifiedEcores(genClass, ecoreNames, expectedModifiedEcores);
+    };
+    this.compilationTestHelper.compile(rs, _function);
+  }
+  
+  private void checkExecutionAndAssertExpectedModifiedEcores(final Class<?> genClass, final List<String> ecoreNames, final List<Pair<CharSequence, CharSequence>> expectedModifiedEcores) {
+    try {
+      final Object edeltaObj = genClass.getDeclaredConstructor().newInstance();
+      for (final String ecoreName : ecoreNames) {
+        this._reflectExtensions.invoke(edeltaObj, "loadEcoreFile", new Object[] { (EdeltaAbstractTest.METAMODEL_PATH + ecoreName) });
+      }
+      this._reflectExtensions.invoke(edeltaObj, "execute");
+      this._reflectExtensions.invoke(edeltaObj, "saveModifiedEcores", new Object[] { EdeltaCompilerTest.MODIFIED });
+      for (final Pair<CharSequence, CharSequence> expected : expectedModifiedEcores) {
+        CharSequence _key = expected.getKey();
+        String _plus = ((EdeltaCompilerTest.MODIFIED + "/") + _key);
+        EdeltaTestUtils.compareSingleFileContents(_plus, 
+          expected.getValue().toString());
+      }
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   private void wipeModifiedDirectoryContents() {

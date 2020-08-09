@@ -107,6 +107,25 @@ class EdeltaContentAssistTest extends AbstractContentAssistTest {
 	}
 
 	@Test def void testMetamodelsInThePresenceOfSubpackages() {
+		createMySubPackagesEcore()
+		waitForBuild // required to index the new ecore file
+		// mainpackage.subpackage and mainpackage.subpackage.subsubpackage
+		// must not be proposed, since they are subpackages,
+		// which cannot be directly imported
+		newBuilder.append('metamodel ')
+			.assertText(
+				'''
+				"annotation"
+				"data"
+				"ecore"
+				"mainpackage"
+				"mypackage"
+				"namespace"
+				"type"
+				'''.fromLinesOfStringsToStringArray)
+	}
+
+	private def IFile createMySubPackagesEcore() {
 		createFile(PROJECT_NAME+"/model/MySubPackages.ecore",
 			'''
 			<?xml version="1.0" encoding="UTF-8"?>
@@ -132,21 +151,6 @@ class EdeltaContentAssistTest extends AbstractContentAssistTest {
 			</ecore:EPackage>
 			'''
 		)
-		waitForBuild // required to index the new ecore file
-		// mainpackage.subpackage and mainpackage.subpackage.subsubpackage
-		// must not be proposed, since they are subpackages,
-		// which cannot be directly imported
-		newBuilder.append('metamodel ')
-			.assertText(
-				'''
-				"annotation"
-				"data"
-				"ecore"
-				"mainpackage"
-				"mypackage"
-				"namespace"
-				"type"
-				'''.fromLinesOfStringsToStringArray)
 	}
 
 	@Test def void testNoNSURIProposalMetamodels() {
@@ -170,6 +174,19 @@ class EdeltaContentAssistTest extends AbstractContentAssistTest {
 				myDerivedReference
 				myReference
 				mypackage
+				'''.fromLinesOfStringsToStringArray)
+	}
+
+	@Test def void testUnqualifiedEcoreReferenceWithPrefix() {
+		newBuilder.append('''
+			metamodel "mypackage"
+			modifyEcore aTest epackage mypackage { 
+				ecoreref(myd''').
+			assertText('''
+				MyDataType
+				MyDerivedClass
+				myDerivedAttribute
+				myDerivedReference
 				'''.fromLinesOfStringsToStringArray)
 	}
 
@@ -223,6 +240,31 @@ class EdeltaContentAssistTest extends AbstractContentAssistTest {
 			assertProposal('foo')
 	}
 
+	@Test def void testUnqualifiedEcoreReferenceBeforeRemovalOfEClass() {
+		'''
+		metamodel "mypackage"
+		modifyEcore aTest epackage mypackage {
+			ecoreref(«cursor»);
+			EClassifiers -= ecoreref(MyClass)
+		}'''.
+			testContentAssistant(
+				'''
+				MyBaseClass
+				MyClass
+				MyDataType
+				MyDerivedClass
+				myAttribute
+				myBaseAttribute
+				myBaseReference
+				myDerivedAttribute
+				myDerivedReference
+				myReference
+				mypackage
+				'''.fromLinesOfStringsToStringArray
+			)
+		// MyClass is still present in that context so it is proposed
+	}
+
 	@Test def void testQualifiedEcoreReferenceBeforeRemovalOfEClass() {
 		'''
 		metamodel "mypackage"
@@ -231,6 +273,160 @@ class EdeltaContentAssistTest extends AbstractContentAssistTest {
 			EClassifiers -= ecoreref(MyClass)
 		}'''.
 			testContentAssistant(#['myAttribute', 'myReference'])
+		// MyClass is still present in that context so its features are proposed
+	}
+
+	@Test def void testQualifiedEcoreReferenceBeforeRemovalOfEStructuralFeature() {
+		'''
+		metamodel "mypackage"
+		modifyEcore aTest epackage mypackage {
+			ecoreref(MyClass.«cursor»);
+			ecoreref(MyClass).EStructuralFeatures -= ecoreref(myReference)
+		}'''.
+			testContentAssistant(#['myAttribute', 'myReference'])
+		// myReference is still present in that context so it is proposed
+	}
+
+	@Test def void testQualifiedEcoreReferenceBeforeAdditionOfEStructuralFeature() {
+		'''
+		metamodel "mypackage"
+		modifyEcore aTest epackage mypackage {
+			ecoreref(MyClass.«cursor»);
+			ecoreref(MyClass).addNewEAttribute("myNewAttribute", null)
+		}'''.
+			testContentAssistant(#['myAttribute', 'myReference'])
+		// myNewAttribute is not yet present in that context so it is not proposed
+	}
+
+	@Test def void testUnqualifiedEcoreReferenceAfterRemoval() {
+		newBuilder.append('''
+			metamodel "mypackage"
+			modifyEcore aTest epackage mypackage { 
+				EClassifiers -= ecoreref(MyBaseClass)
+				ecoreref(''').
+			assertText('''
+				MyClass
+				MyDataType
+				MyDerivedClass
+				myAttribute
+				myDerivedAttribute
+				myDerivedReference
+				myReference
+				mypackage
+				'''.fromLinesOfStringsToStringArray)
+		// MyBaseClass and its features myBaseAttribute and myBaseReference
+		// are not proposed since they are not present anymore in this context
+	}
+
+	@Test def void testQualifiedEcoreReferenceAfterRemovalOfEStructuralFeature() {
+		newBuilder.append('''
+			metamodel "mypackage"
+			modifyEcore aTest epackage mypackage { 
+				ecoreref(MyBaseClass).EStructuralFeatures -= ecoreref(myBaseAttribute)
+				ecoreref(MyBaseClass.''').
+			assertText('''
+				myBaseReference
+				'''.fromLinesOfStringsToStringArray)
+		// myBaseAttribute is not proposed since it's not present anymore in this context
+	}
+
+	@Test def void testQualifiedEcoreReferenceAfterAdditionOfEStructuralFeature() {
+		'''
+		metamodel "mypackage"
+		modifyEcore aTest epackage mypackage {
+			ecoreref(MyClass).addNewEAttribute("myNewAttribute", null)
+			ecoreref(MyClass.«cursor»);
+		}'''.
+			testContentAssistant(#['myAttribute', 'myReference', "myNewAttribute"])
+		// myNewAttribute is now present in that context so it is proposed
+	}
+
+	@Test def void testUnqualifiedEcoreReferenceBeforeRename() {
+		'''
+		metamodel "mypackage"
+		modifyEcore aTest epackage mypackage {
+			ecoreref(«cursor»)
+			ecoreref(MyBaseClass).name = "Renamed"
+		}'''.
+			testContentAssistant(
+				'''
+				MyBaseClass
+				MyClass
+				MyDataType
+				MyDerivedClass
+				myAttribute
+				myBaseAttribute
+				myBaseReference
+				myDerivedAttribute
+				myDerivedReference
+				myReference
+				mypackage
+				'''.fromLinesOfStringsToStringArray
+			)
+		// MyBaseClass is not yet renamed in this context
+	}
+
+	@Test def void testUnqualifiedEcoreReferenceAfterRename() {
+		newBuilder.append('''
+			metamodel "mypackage"
+			modifyEcore aTest epackage mypackage { 
+				ecoreref(MyBaseClass).name = "Renamed"
+				ecoreref(''').
+			assertText('''
+				MyClass
+				MyDataType
+				MyDerivedClass
+				Renamed
+				myAttribute
+				myBaseAttribute
+				myBaseReference
+				myDerivedAttribute
+				myDerivedReference
+				myReference
+				mypackage
+				'''.fromLinesOfStringsToStringArray)
+		// MyBaseClass is proposed with its new name Renamed
+		// and its features myBaseAttribute and myBaseReference
+		// are still proposed since they are still present in this context
+	}
+
+	@Test def void testForAmbiguousReferencesFullyQualifiedNameIsProposed() {
+		createMySubPackagesEcore()
+		waitForBuild // required to index the new ecore file
+		newBuilder.append('''
+			metamodel "mainpackage"
+			
+			modifyEcore aTest epackage mainpackage {
+				ecoreref(My''')
+			.assertText(
+				'''
+				MySubPackageClass
+				mainpackage.MyClass
+				mainpackage.MyClass.myAttribute
+				mainpackage.MyClass.myReference
+				mainpackage.subpackage.MyClass
+				mainpackage.subpackage.MyClass.myAttribute
+				mainpackage.subpackage.MyClass.myReference
+				mainpackage.subpackage.subsubpackage.MyClass
+				mainpackage.subpackage.subsubpackage.MyClass.myAttribute
+				mainpackage.subpackage.subsubpackage.MyClass.myReference
+				'''.fromLinesOfStringsToStringArray)
+	}
+
+	@Test def void testForAmbiguousReferencesFullyQualifiedNameIsReplaced() {
+		createMySubPackagesEcore()
+		waitForBuild // required to index the new ecore file
+		newBuilder.append('''
+			metamodel "mainpackage"
+			
+			modifyEcore aTest epackage mainpackage {
+				ecoreref(My''')
+			.applyProposal("mainpackage.subpackage.MyClass.myAttribute")
+			.expectContent('''
+			metamodel "mainpackage"
+			
+			modifyEcore aTest epackage mainpackage {
+				ecoreref(mainpackage.subpackage.MyClass.myAttribute''')
 	}
 
 	def private fromLinesOfStringsToStringArray(CharSequence strings) {
