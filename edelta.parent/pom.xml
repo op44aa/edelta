@@ -352,6 +352,17 @@
     <pluginManagement>
       <plugins>
         <plugin>
+          <!-- 
+            remove after https://github.com/LorenzoBettini/xtext-build-utils/issues/16
+          -->
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-compiler-plugin</artifactId>
+          <configuration>
+            <compilerArgument>-err:-forbidden</compilerArgument>
+            <useProjectSettings>true</useProjectSettings>
+          </configuration>
+        </plugin>
+        <plugin>
           <!-- We don't use it, since we have edelta-maven-plugin, we leave it here
             just for historical reasons ;) -->
           <groupId>org.eclipse.xtext</groupId>
