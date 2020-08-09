@@ -51,7 +51,6 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <xtext-version>${xtextVersion}</xtext-version>
-    <tycho-version>2.0.0</tycho-version>
   </properties>
 
   <dependencyManagement>
@@ -125,13 +124,6 @@
       </plugins>
     </pluginManagement>
   </build>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <id>tycho-staged</id>
-      <url>https://oss.sonatype.org/content/repositories/orgeclipsetycho-1063/</url>
-    </pluginRepository>
-  </pluginRepositories>
 
   <profiles>
     <profile>
