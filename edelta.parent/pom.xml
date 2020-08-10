@@ -24,6 +24,9 @@
     <jacoco-version>0.8.5</jacoco-version>
     <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
 
+    <!-- Define overridable properties for tycho-surefire-plugin -->
+    <previewProperties></previewProperties>
+
     <mwe2.skip>false</mwe2.skip>
     <xtend.skip>false</xtend.skip>
 
@@ -331,6 +334,15 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>jdk12-or-newer</id>
+      <activation>
+        <jdk>[12,)</jdk>
+      </activation>
+      <properties>
+        <previewProperties>--enable-preview</previewProperties>
+      </properties>
+    </profile>
   </profiles>
 
   <build>
@@ -351,6 +363,20 @@
     </plugins>
     <pluginManagement>
       <plugins>
+        <!-- 
+          remove after https://github.com/LorenzoBettini/xtext-build-utils/issues/17
+        -->
+        <plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-surefire-plugin</artifactId>
+          <version>${tycho-version}</version>
+          <configuration>
+            <!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
+            <argLine>${previewProperties} ${platformSystemProperties} ${systemProperties} ${moduleProperties} ${additionalTestArguments}</argLine>
+            <failIfNoTests>false</failIfNoTests>
+            <useUIHarness>false</useUIHarness>
+          </configuration>
+        </plugin>
         <plugin>
           <!-- 
             remove after https://github.com/LorenzoBettini/xtext-build-utils/issues/16

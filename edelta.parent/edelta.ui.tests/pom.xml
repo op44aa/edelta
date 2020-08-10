@@ -85,7 +85,6 @@
         <artifactId>tycho-surefire-plugin</artifactId>
         <configuration>
           <useUIHarness>true</useUIHarness>
-          <argLine>${argLine} --enable-preview</argLine>
         </configuration>
       </plugin>
     </plugins>
